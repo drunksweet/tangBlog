@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>java-review | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="java复习java特点一些有关Java的专业术语  JDK（Java Development Kit ）：编写Java程序的程序员使用的软件 JRE（Java Runtime Environment）：运行Java程序的用户使用的软件 Server JRE （Java SE Runtime Environment）：服务端使用的 Java 运行环境 SDK（Software Developmen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-review">
+<meta property="og:url" content="http://example.com/2024/05/21/java-review/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="java复习java特点一些有关Java的专业术语  JDK（Java Development Kit ）：编写Java程序的程序员使用的软件 JRE（Java Runtime Environment）：运行Java程序的用户使用的软件 Server JRE （Java SE Runtime Environment）：服务端使用的 Java 运行环境 SDK（Software Developmen">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.png">
+<meta property="article:published_time" content="2024-05-21T13:06:24.000Z">
+<meta property="article:modified_time" content="2024-05-22T02:25:51.854Z">
+<meta property="article:author" content="Drunksweet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.png"><link rel="shortcut icon" href="/img/joker.png"><link rel="canonical" href="http://example.com/2024/05/21/java-review/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'java-review',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-22 10:25:51'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="焦糖酒的妙妙屋"><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">java-review</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-21T13:06:24.000Z" title="发表于 2024-05-21 21:06:24">2024-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-22T02:25:51.854Z" title="更新于 2024-05-22 10:25:51">2024-05-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="java-review"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="java复习"><a href="#java复习" class="headerlink" title="java复习"></a>java复习</h1><h2 id="java特点"><a href="#java特点" class="headerlink" title="java特点"></a>java特点</h2><p>一些有关Java的专业术语</p>
+<ul>
+<li>JDK（Java Development Kit ）：编写Java程序的程序员使用的软件</li>
+<li>JRE（Java Runtime Environment）：运行Java程序的用户使用的软件</li>
+<li>Server JRE （Java SE Runtime Environment）：服务端使用的 Java 运行环境</li>
+<li>SDK（Software Development Kit）：软件开发工具包，在Java中用于描述1998年~2006年之间的JDK</li>
+<li>DAO（Data Access Object）：数据访问接口，数据访问，顾名思义就是与数据库打交道</li>
+<li>MVC（Model View Controller）：模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用于组织代码用一种业务逻辑和数据显示分离的方法</li>
+<li>OOP（object-oriented programming）：面向对象程序设计</li>
+</ul>
+<p><strong>Java对所有参数都是按值传递的</strong></p>
+<h2 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h2><h4 id="访问修饰符"><a href="#访问修饰符" class="headerlink" title="访问修饰符"></a>访问修饰符</h4><ul>
+<li><strong>default</strong> (即默认，什么也不写）: 在同一包内可见，不使用任何修饰符。使用对象：类、接口、变量、方法。</li>
+<li><strong>private</strong> : 在同一类内可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong></li>
+<li><strong>public</strong> : 对所有类可见。使用对象：类、接口、变量、方法</li>
+<li><strong>protected</strong> : 对同一包内的类和所有子类可见。使用对象：变量、方法。 <strong>注意：不能修饰类（外部类）</strong>。</li>
+</ul>
+<p><strong>private</strong> 的方法、变量和构造方法只能被所属类访问，并且类和接口不能声明为 <strong>private</strong></p>
+<p><strong>public</strong> 的类、方法、构造方法和接口能够被任何其他类访问</p>
+<h4 id="非访问修饰符"><a href="#非访问修饰符" class="headerlink" title="非访问修饰符"></a>非访问修饰符</h4><ul>
+<li><p><strong>static</strong> 修饰符，用来修饰类方法和类变量。</p>
+</li>
+<li><p><strong>final</strong> 修饰符，用来修饰类、方法和变量，final 修饰的类不能够被继承，修饰的方法不能被继承类重新定义，修饰的变量为常量，是不可修改的。</p>
+</li>
+<li><p><strong>abstract</strong> 修饰符，用来创建抽象类和抽象方法。</p>
+</li>
+<li><p><strong>synchronized</strong> 和 <strong>volatile</strong> 修饰符，主要用于线程的编程。</p>
+</li>
+</ul>
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a><strong>final</strong></h5><ul>
+<li><strong>final 变量</strong></li>
+</ul>
+<p>被 final 修饰的实例变量必须显式指定初始值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>final 方法</strong></li>
+</ul>
+<p>父类中的 final 方法<strong>可以被子类继承</strong>，但是<strong>不能被子类重写</strong>。</p>
+<p>声明 final 方法的主要目的是防止该方法的内容被修改</p>
+<ul>
+<li><strong>final 类</strong></li>
+</ul>
+<p>final 类<strong>不能被继承</strong>，没有类能够继承 final 类的任何特性</p>
+<h5 id="static"><a href="#static" class="headerlink" title="static"></a>static</h5><ul>
+<li><p><strong>静态变量：</strong></p>
+<p>static 关键字用来声明独立于对象的静态变量，无论一个类实例化多少对象，它的静态变量只有一份拷贝。 静态变量也被称为类变量。局部变量不能被声明为 static 变量。</p>
+</li>
+<li><p><strong>静态方法：</strong></p>
+<p>static 关键字用来声明独立于对象的静态方法。静态方法不能使用类的非静态变量。静态方法从参数列表得到数据，然后计算这些数据。</p>
+</li>
+</ul>
+<p>静态字段（静态常量）</p>
+<p>静态变量 static final</p>
+<ul>
+<li><strong>静态变量或类变量（Class Variables）：</strong>类变量是在类中用 static 关键字声明的变量，它们属于类而不是实例，所有该类的实例共享同一个类变量的值，类变量在类加载时被初始化，而且只初始化一次。</li>
+</ul>
+<p><strong>常量和静态变量的区别：</strong>常量也是与类相关的，但它是用 final 关键字修饰的变量，一旦被赋值就不能再修改。与静态变量不同的是，常量在编译时就已经确定了它的值，而静态变量的值可以在运行时改变。另外，常量通常用于存储一些固定的值，如数学常数、配置信息等，而静态变量通常用于存储可变的数据，如计数器、全局状态等。</p>
+<p>总之，静态变量是与类相关的变量，具有唯一性和共享性，可以用于存储整个程序都需要使用的数据，但需要注意初始化时机和与常量的区别。</p>
+<p><strong>静态变量和实例变量区别：</strong></p>
+<p>静态变量属于类，该类不生产对象，通过类名就可以调用静态变量。</p>
+<p>实例变量属于该类的对象，必须产生该类对象，才能调用实例变量。</p>
+<p><strong>静态变量的使用场景</strong></p>
+<p>静态变量通常用于以下场景：</p>
+<ul>
+<li>存储全局状态或配置信息</li>
+<li>计数器或统计信息</li>
+<li>缓存数据或共享资源</li>
+<li>工具类的常量或方法</li>
+<li>单例模式中的实例变量</li>
+</ul>
+<h5 id="abstract"><a href="#abstract" class="headerlink" title="abstract"></a>abstract</h5><ul>
+<li>抽象类</li>
+<li>抽象方法</li>
+</ul>
+<h5 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h5><h5 id="transient"><a href="#transient" class="headerlink" title="transient"></a>transient</h5><h5 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h5><h2 id="基本数据类型及其函数"><a href="#基本数据类型及其函数" class="headerlink" title="基本数据类型及其函数"></a>基本数据类型及其函数</h2><h3 id="Number-Math类"><a href="#Number-Math类" class="headerlink" title="Number &amp; Math类"></a>Number &amp; Math类</h3><p>[具体函数自己看](<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-number.html">Java Number &amp; Math 类 | 菜鸟教程 (runoob.com)</a>)</p>
+<h3 id="Character-String-StringBuffer类"><a href="#Character-String-StringBuffer类" class="headerlink" title="Character &amp; String &amp; StringBuffer类"></a>Character &amp; String &amp; StringBuffer类</h3><p>[具体函数自己看](<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-string.html">Java String 类 | 菜鸟教程 (runoob.com)</a>)</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-string-concat.html"> String concat(String str)</a> 将指定字符串连接到此字符串的结尾。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-string-length.html"> int length()</a> 返回此字符串的长度。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-string-trim.html"> String trim()</a> 返回字符串的副本，忽略前导空白和尾部空白。</p>
+</li>
+</ul>
+<h2 id="最重要的OOP思想"><a href="#最重要的OOP思想" class="headerlink" title="最重要的OOP思想"></a>最重要的OOP思想</h2><ul>
+<li><p>类（class）</p>
+</li>
+<li><p>对象（object）</p>
+</li>
+<li><p>实例（instance）</p>
+</li>
+<li><p>多态</p>
+</li>
+<li><p>继承（inheritance）</p>
+</li>
+<li><p>封装（encapsulation）</p>
+</li>
+<li><p>方法</p>
+</li>
+<li><p>抽象类</p>
+</li>
+<li><p>重载</p>
+</li>
+<li><p>重写</p>
+</li>
+</ul>
+<h3 id="对象是类的实例，类是对象的抽象"><a href="#对象是类的实例，类是对象的抽象" class="headerlink" title="对象是类的实例，类是对象的抽象"></a>对象是类的实例，类是对象的抽象</h3><p>构造器（constructor）用来创造实例</p>
+<p>访问器 getter setter 实现封装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Achievement</span> <span class="keyword">extends</span> <span class="title class_">BaseActivity</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//instance fields</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> achievementId;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> isfinished;</span><br><span class="line"></span><br><span class="line"><span class="comment">//constructor</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Achievement</span><span class="params">(<span class="type">int</span> achievementId, String title, <span class="type">boolean</span> isfinished)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.achievementId = achievementId;</span><br><span class="line">        <span class="built_in">this</span>.title = title;</span><br><span class="line">        <span class="built_in">this</span>.isfinished = isfinished;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//method</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAchievementId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> achievementId+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getTitle</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> title;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isIsfinished</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> isfinished;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setIsfinished</span><span class="params">(<span class="type">boolean</span> isfinished)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.isfinished = isfinished;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="继承（inheritance）"><a href="#继承（inheritance）" class="headerlink" title="继承（inheritance）"></a>继承（inheritance）</h3><h4 id="extends关键字"><a href="#extends关键字" class="headerlink" title="extends关键字"></a>extends关键字</h4><p>在 Java 中，类的继承是单一继承，也就是说，一个子类只能拥有一个父类，所以 extends 只能继承一个类。</p>
+<h4 id="implements关键字"><a href="#implements关键字" class="headerlink" title="implements关键字"></a>implements关键字</h4><p>使用 implements 关键字可以变相的使java具有多继承的特性，使用范围为类继承接口的情况，可以同时继承多个接口（接口跟接口之间采用逗号分隔）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sleep</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">B</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">show</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">implements</span> <span class="title class_">A</span>,B &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重写-Override-与重载-Overload"><a href="#重写-Override-与重载-Overload" class="headerlink" title="重写(Override)与重载(Overload)"></a>重写(Override)与重载(Overload)</h3><ul>
+<li><p><strong>重写（Override）</strong>是指子类定义了一个与其父类中具有相同名称、参数列表和返回类型的方法，并且子类方法的实现覆盖了父类方法的实现。 <strong>即外壳不变，核心重写！</strong></p>
+<p>当需要在子类中调用父类的被重写方法时，要使用 <strong>super</strong> 关键字。</p>
+</li>
+<li><p><strong>重载(overloading)</strong> 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。		</p>
+</li>
+<li><p><strong>方法重载</strong>是一个类的多态性表现,而<strong>方法重写</strong>是子类与父类的一种多态性表现</p>
+</li>
+</ul>
+<p>重写是将父类的方法逻辑重写（儿子叛逆但未变异）</p>
+<p>重载是使同名方法有不同逻辑</p>
+<h4 id="方法的重写规则"><a href="#方法的重写规则" class="headerlink" title="方法的重写规则"></a>方法的重写规则</h4><ul>
+<li>参数列表与被重写方法的参数列表必须完全相同。</li>
+<li>返回类型与被重写方法的返回类型可以不相同，但是必须是父类返回值的派生类（java5 及更早版本返回类型要一样，java7 及更高版本可以不同）。</li>
+<li>访问权限不能比父类中被重写的方法的访问权限更低。例如：如果父类的一个方法被声明为 public，那么在子类中重写该方法就不能声明为 protected。</li>
+<li>父类的成员方法只能被它的子类重写。</li>
+<li>声明为 final 的方法不能被重写。</li>
+<li>声明为 static 的方法不能被重写，但是能够被再次声明。</li>
+<li>子类和父类在同一个包中，那么子类可以重写父类所有方法，除了声明为 private 和 final 的方法。</li>
+<li>子类和父类不在同一个包中，那么子类只能够重写父类的声明为 public 和 protected 的非 final 方法。</li>
+<li>重写的方法能够抛出任何非强制异常，无论被重写的方法是否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则可以。</li>
+<li>构造方法不能被重写。</li>
+<li>如果不能继承一个类，则不能重写该类的方法。</li>
+</ul>
+<h4 id="重载规则"><a href="#重载规则" class="headerlink" title="重载规则"></a><strong>重载规则</strong></h4><ul>
+<li>被重载的方法必须改变参数列表(参数个数或类型不一样)；</li>
+<li>被重载的方法可以改变返回类型；</li>
+<li>被重载的方法可以改变访问修饰符；</li>
+<li>被重载的方法可以声明新的或更广的检查异常；</li>
+<li>方法能够在同一个类中或者在一个子类中被重载。</li>
+<li>无法以返回值类型作为重载函数的区分标准。</li>
+</ul>
+<h4 id="重写与重载之间的区别"><a href="#重写与重载之间的区别" class="headerlink" title="重写与重载之间的区别"></a>重写与重载之间的区别</h4><table>
+<thead>
+<tr>
+<th align="left">区别点</th>
+<th align="left">重载方法</th>
+<th align="left">重写方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">参数列表</td>
+<td align="left">必须修改</td>
+<td align="left">一定不能修改</td>
+</tr>
+<tr>
+<td align="left">返回类型</td>
+<td align="left">可以修改</td>
+<td align="left">一定不能修改</td>
+</tr>
+<tr>
+<td align="left">异常</td>
+<td align="left">可以修改</td>
+<td align="left">可以减少或删除，一定不能抛出新的或者更广的异常</td>
+</tr>
+<tr>
+<td align="left">访问</td>
+<td align="left">可以修改</td>
+<td align="left">一定不能做更严格的限制（可以降低限制）</td>
+</tr>
+</tbody></table>
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><ul>
+<li>抽象类中不一定包含抽象方法，但是有抽象方法的类必定是抽象类</li>
+<li>抽象类的子类必须给出抽象类中的抽象方法的具体实现，除非该子类也是抽象类</li>
+</ul>
+<h3 id="枚举类（enum）"><a href="#枚举类（enum）" class="headerlink" title="枚举类（enum）"></a>枚举类（enum）</h3><h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>内部类是定义在另一个类内部的类</p>
+<h3 id="内部类的类型"><a href="#内部类的类型" class="headerlink" title="内部类的类型"></a>内部类的类型</h3><p>写着就明白了（帮忙简化代码的）</p>
+<ol>
+<li><strong>成员内部类</strong>（Member Inner Class）</li>
+<li><strong>局部内部类</strong>（Local Inner Class）</li>
+<li><strong>匿名内部类</strong>（Anonymous Inner Class）</li>
+<li><strong>静态内部类</strong>（Static Nested Class）</li>
+</ol>
+<p>成员内部类定义在另一个类的内部，并且作为外部类的一个成员存在。它可以访问外部类的所有成员，包括私有成员。</p>
+<p>局部内部类定义在方法或作用域块中。它只能在该方法或作用域块内使用。</p>
+<p>匿名内部类是一种没有名字的内部类，通常用来简化代码，尤其是用于实现接口或抽象类的实例。</p>
+<p>静态内部类使用 <code>static</code> 修饰，独立于外部类的实例。它只能访问外部类的静态成员。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HomePage</span> <span class="keyword">extends</span> <span class="title class_">BaseActivity</span> &#123; </span><br><span class="line">    <span class="comment">//内部类</span></span><br><span class="line">    <span class="keyword">private</span> ImageButton btnZhaomu;</span><br><span class="line">    btnZhaomu.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span> &#123;</span><br><span class="line">                <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> Achievement_Activity.newIntent(HomePage.<span class="built_in">this</span>);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">                finish();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/05/21/java-review/">http://example.com/2024/05/21/java-review/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/05/12/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%881%EF%BC%89/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E5%A4%8D%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">java复习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#java%E7%89%B9%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">java特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text">修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">访问修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">非访问修饰符</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#final"><span class="toc-number">1.2.0.2.1.</span> <span class="toc-text">final</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#static"><span class="toc-number">1.2.0.2.2.</span> <span class="toc-text">static</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#abstract"><span class="toc-number">1.2.0.2.3.</span> <span class="toc-text">abstract</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#synchronized"><span class="toc-number">1.2.0.2.4.</span> <span class="toc-text">synchronized</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#transient"><span class="toc-number">1.2.0.2.5.</span> <span class="toc-text">transient</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#volatile"><span class="toc-number">1.2.0.2.6.</span> <span class="toc-text">volatile</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">基本数据类型及其函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Number-Math%E7%B1%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text">Number &amp; Math类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Character-String-StringBuffer%E7%B1%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">Character &amp; String &amp; StringBuffer类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84OOP%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.</span> <span class="toc-text">最重要的OOP思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%98%AF%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B%EF%BC%8C%E7%B1%BB%E6%98%AF%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8A%BD%E8%B1%A1"><span class="toc-number">1.4.1.</span> <span class="toc-text">对象是类的实例，类是对象的抽象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.5.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%EF%BC%88inheritance%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">继承（inheritance）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extends%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">extends关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#implements%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">implements关键字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%86%99-Override-%E4%B8%8E%E9%87%8D%E8%BD%BD-Overload"><span class="toc-number">1.5.2.</span> <span class="toc-text">重写(Override)与重载(Overload)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">方法的重写规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E8%A7%84%E5%88%99"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">重载规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%86%99%E4%B8%8E%E9%87%8D%E8%BD%BD%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">重写与重载之间的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-number">1.5.3.</span> <span class="toc-text">抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB%EF%BC%88enum%EF%BC%89"><span class="toc-number">1.5.4.</span> <span class="toc-text">枚举类（enum）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.5.5.</span> <span class="toc-text">内部类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.5.6.</span> <span class="toc-text">内部类的类型</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/21/java-review/" title="java-review">java-review</a><time datetime="2024-05-21T13:06:24.000Z" title="发表于 2024-05-21 21:06:24">2024-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%881%EF%BC%89/" title="无题">无题</a><time datetime="2024-05-12T14:06:25.588Z" title="发表于 2024-05-12 22:06:25">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/Ros/" title="无题">无题</a><time datetime="2024-05-11T18:30:57.881Z" title="发表于 2024-05-12 02:30:57">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/Git/" title="无题">无题</a><time datetime="2024-05-11T18:30:35.496Z" title="发表于 2024-05-12 02:30:35">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/hello-world/" title="Hello World">Hello World</a><time datetime="2024-05-11T17:01:23.509Z" title="发表于 2024-05-12 01:01:23">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Drunksweet</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
