@@ -51,7 +51,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-05-22 10:26:34'
+  postUpdate: '2024-05-22 10:33:36'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -177,47 +177,7 @@ Matplotlib
 
 Numpy简介：NumPy 是 Python 中科学计算的基础包。它是一个 Python 库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种例程，包括数学、逻辑、形状操作、排序、选择、I&#x2F;O、离散傅里叶变换、基本线性代数、基本统计运算、随机模拟等等。
 数组array是 NumPy 库的中心数据结构。数组是值的网格，它包含有关原始数据、如何定位元素以及如何解释元素的信息。它有一个元素网格，可以以各种方式进行索引。这些元素都属于同一类型，称为数组 dtype 。
-人 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/12/Ros/" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-11T18:30:57.881Z" title="发表于 2024-05-12 02:30:57">2024-05-12</time></span></div><div class="content">2024年4月13日参考11.初学ROS，年轻人的第一个Node节点_哔哩哔哩_bilibili
-编写结点基本流程
-
-1. 创建Package 软件包
-
-
-
-
-
-
-
-
-
-
-
-
-
-2. 创建node结点
-
-3. 编译程序CMake编译指令：
-
-为包添加一个可执行程序
-add_executable(chao_node src/char_node.cpp)
-
-提供链接ROS系统库
-target_link_libraries(chao_node
-​        $&#123;catkin_LIBRARIES&#125;
-)
-
-
-
-
-4. 运行可执行程序
-添加终端启动自动加载指令
-
-
-
-
-保持程序不断运行代码示例12345678910#include &lt;ros/ros.h&gt;int main(int argc, char* argv[]) &#123;    ros::init(argc, argv, &quot;chao_node&quot;);    printf(&quot;hello, world!\n&quot;);    while(ros::ok()) &#123;   ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/12/Git/" title="无题">无题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-11T18:30:35.496Z" title="发表于 2024-05-12 02:30:35">2024-05-12</time></span></div><div class="content">123title: Gitdate: 2024-05-12 22:06:25tags: fast learn
-
-Git初始化配置12345678git -v   git config  --global user.name &quot;&lt;username&gt;&quot;git config --global user.email &lt;email&gt;#git环境配置信息git config --global --list
+人 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/03/Git/" title="Git">Git</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-03T06:51:25.000Z" title="发表于 2024-05-03 14:51:25">2024-05-03</time></span></div><div class="content">Git初始化配置12345678git -v   git config  --global user.name &quot;&lt;username&gt;&quot;git config --global user.email &lt;email&gt;#git环境配置信息git config --global --list
 
 
 创建仓库1234567#create a new dir to store the gitresomkdir &lt;dirname&gt;git init# look all resoucels -a#create a new git reso in the present dirgit init &lt;newdirname&gt;
@@ -227,20 +187,52 @@ git workspace and file statusgit workspace
 file status
 
 untrack *the new created file
-unmodified  *the un ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/05/12/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-05-11T17:01:23.509Z" title="发表于 2024-05-12 01:01:23">2024-05-12</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &quot;tang blog&quot;
+unmodified  *the unchanged git file
+modified *the changed git file but have ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/22/ROS/" title="ROS">ROS</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-22T02:28:40.000Z" title="发表于 2024-04-22 10:28:40">2024-04-22</time></span></div><div class="content">ROSRos是什么模块化、分布式
+ROS： An Open-Source Robot Operating System
+机器人界的Android
+Ubuntu 入门中英文切换 shift   win+space
+系统文件
+连接网络 右上角
+终端程序 CTRL+L+T
 
-More info: Writing
-Run server1$ hexo server
+ls list 罗列清单
+mkdir make directory 创建新的目录
+cd change directory 进入目录
+cd .. 回到上级目录
+cd~ 回到主文件夹
+Tap 自动补全指令或目录
 
-More info: Server
-Generate static files1$ hexo generate
+gedit  编辑 文本编辑器类似txt
+source 执行文件
+终端启动脚本 .bashrc
+sudo 管理员执行
+github资源下载scripts 目录用于放置脚本文件（安装依赖包等低频率的操作）和python程序
+资源寻找
+Index.ros上搜索
+GitHub上搜索
 
-More info: Generating
-Deploy to remote sites1$ hexo deploy
+资源下载cd catkin_ws&#x2F;src&#x2F;    进入src文件
+git clone https…..     下载资源到src上
+cd  ~&#x2F;catkin_ws&#x2F;    进入catkin_ws目录
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/12/ML1/" title="ML1">ML1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-12T10:30:43.000Z" title="发表于 2024-04-12 18:30:43">2024-04-12</time></span></div><div class="content">﻿# 数据分析(1)
+这篇简单介绍一下数据分析中常用到的几个库函数，强烈推荐使用JupyterNotebook，有机会写一篇教程速通一下，下面的图也都是直接从Jupyter中截取出来的。
+基础库介绍
 
-More info: Deployment
-</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/21/java-review/" title="java-review">java-review</a><time datetime="2024-05-21T13:06:24.000Z" title="发表于 2024-05-21 21:06:24">2024-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%881%EF%BC%89/" title="无题">无题</a><time datetime="2024-05-12T14:06:25.588Z" title="发表于 2024-05-12 22:06:25">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/Ros/" title="无题">无题</a><time datetime="2024-05-11T18:30:57.881Z" title="发表于 2024-05-12 02:30:57">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/Git/" title="无题">无题</a><time datetime="2024-05-11T18:30:35.496Z" title="发表于 2024-05-12 02:30:35">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/hello-world/" title="Hello World">Hello World</a><time datetime="2024-05-11T17:01:23.509Z" title="发表于 2024-05-12 01:01:23">2024-05-12</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">5</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-05-22T02:26:34.511Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Drunksweet</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+
+Numpy
+Pandas
+Matplotlib
+
+
+
+主要用于处理多维数组和矩阵运算
+用于数据处理和分析的库，提供了DataFrame数据结构和各种数据操作功能，如数据清洗、转换、筛选等
+用于数据可视化的库，提供了各种绘图函数和工具，可以创建各种类型的图表，如折线图、柱状图、散点图等
+
+
+Numpy简介：NumPy 是 Python 中科学计算的基础包。它是一个 Python 库，提供多维数组对象、各种派生对象（例如掩码数组和矩阵）以及用于对数组进行快速操作的各种例程，包括数学、逻辑、形状操作、排序、选择、I&#x2F;O、离散傅里叶变换、基本线性代数、基本统计运算、随机模拟等等。
+数组array是 NumPy 库的中心数据结构。数组是值的网格，它包含有关原始数据、如何定位元素以及如何解释元素的信息。它有一个元素网格，可以以各种方式进行索引。这些元素都属于同一类型，称为数组 dtype ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/21/java-review/" title="java-review">java-review</a><time datetime="2024-05-21T13:06:24.000Z" title="发表于 2024-05-21 21:06:24">2024-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%881%EF%BC%89/" title="无题">无题</a><time datetime="2024-05-12T14:06:25.588Z" title="发表于 2024-05-12 22:06:25">2024-05-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/03/Git/" title="Git">Git</a><time datetime="2024-05-03T06:51:25.000Z" title="发表于 2024-05-03 14:51:25">2024-05-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/22/ROS/" title="ROS">ROS</a><time datetime="2024-04-22T02:28:40.000Z" title="发表于 2024-04-22 10:28:40">2024-04-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/12/ML1/" title="ML1">ML1</a><time datetime="2024-04-12T10:30:43.000Z" title="发表于 2024-04-12 18:30:43">2024-04-12</time></div></div></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-05-22T02:33:36.217Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Drunksweet</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
   init: (str) => {
     window.typed = new Typed('#subtitle', Object.assign({
       strings: str,
