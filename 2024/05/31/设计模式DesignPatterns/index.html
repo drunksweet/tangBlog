@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>设计模式DesignPatterns | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习资源 [菜鸟](设计模式简介 | 菜鸟教程 (runoob.com)) [维基百科](软件设计模式 - 维基百科，自由的百科全书 — Software design pattern - Wikipedia) ⭐[**Refactoring.Guru**](常用设计模式有哪些？ (refactoringguru.cn)) [**github**](kamranahmedse&#x2F;desig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式DesignPatterns">
+<meta property="og:url" content="http://example.com/2024/05/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FDesignPatterns/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="学习资源 [菜鸟](设计模式简介 | 菜鸟教程 (runoob.com)) [维基百科](软件设计模式 - 维基百科，自由的百科全书 — Software design pattern - Wikipedia) ⭐[**Refactoring.Guru**](常用设计模式有哪些？ (refactoringguru.cn)) [**github**](kamranahmedse&#x2F;desig">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.png">
+<meta property="article:published_time" content="2024-05-31T09:45:53.000Z">
+<meta property="article:modified_time" content="2024-05-31T11:21:42.028Z">
+<meta property="article:author" content="Drunksweet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.png"><link rel="shortcut icon" href="/img/joker.png"><link rel="canonical" href="http://example.com/2024/05/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FDesignPatterns/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式DesignPatterns',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-31 19:21:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="焦糖酒的妙妙屋"><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">设计模式DesignPatterns</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-31T09:45:53.000Z" title="发表于 2024-05-31 17:45:53">2024-05-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-31T11:21:42.028Z" title="更新于 2024-05-31 19:21:42">2024-05-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式DesignPatterns"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h2><ul>
+<li>[菜鸟](<a target="_blank" rel="noopener" href="https://www.runoob.com/design-pattern/design-pattern-intro.html">设计模式简介 | 菜鸟教程 (runoob.com)</a>)</li>
+<li>[维基百科](<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Software_design_pattern">软件设计模式 - 维基百科，自由的百科全书 — Software design pattern - Wikipedia</a>)</li>
+<li>⭐[**Refactoring.Guru**](<a target="_blank" rel="noopener" href="https://refactoringguru.cn/design-patterns">常用设计模式有哪些？ (refactoringguru.cn)</a>)</li>
+<li>[**github**](<a target="_blank" rel="noopener" href="https://github.com/kamranahmedse/design-patterns-for-humans">kamranahmedse&#x2F;design-patterns-for-humans: An ultra-simplified explanation to design patterns (github.com)</a>)</li>
+</ul>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><p><em><strong>If all you have is a hammer, everything looks like a nail.</strong></em><br>如果你只有一把锤子，那么一切看起来都像钉子。</p>
+<p>这是我看到的对于<strong>学习设计模式利弊</strong>的最好评语</p>
+<p>学习设计模式的好处在于给于我们启示，以一种更加系统结构化的眼光看待问题，并在某种程度上有利于规避潜在问题的出现，但在另一反面一味的套用设计模式也僵化我们的思维，导致遇到什么问题都想机械的套用模板，哪怕是特别简单的问题，这反而会不利于项目的实现。</p>
+<h3 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h3><p>Design patterns are solutions to recurring problems; <strong>guidelines on how to tackle certain problems</strong>. They are not classes, packages or libraries that you can plug into your application and wait for the magic to happen. These are, rather, guidelines on how to tackle certain problems in certain situations.</p>
+<blockquote>
+<p>设计模式是反复出现的问题的解决方案;关于如何解决某些问题的指南。它们不是可以插入应用程序并等待奇迹发生的类、包或库。相反，这些是关于如何在某些情况下解决某些问题的指导方针。</p>
+</blockquote>
+<p>Design patterns are solutions to recurring problems; guidelines on how to tackle certain problems</p>
+<blockquote>
+<p>设计模式是反复出现的问题的解决方案;关于如何解决某些问题的指南</p>
+</blockquote>
+<p><strong>Design patterns</strong> are typical solutions to commonly occurring problems in software design. They are like pre-made blueprints that you can customize to solve a recurring design problem in your code.</p>
+<blockquote>
+<p>设计模式是软件设计中常见问题的典型解决方案。它们就像预制的蓝图，您可以对其进行自定义以解决代码中反复出现的设计问题。</p>
+</blockquote>
+<h4 id="与算法的区别"><a href="#与算法的区别" class="headerlink" title="与算法的区别"></a>与算法的区别</h4><p>Patterns are often confused with algorithms, because both concepts describe typical solutions to some known problems. While an algorithm always defines a clear set of actions that can achieve some goal, a pattern is a more high-level description of a solution. The code of the same pattern applied to two different programs may be different.</p>
+<blockquote>
+<p>模式经常与算法混淆，因为这两个概念都描述了一些已知问题的典型解决方案。虽然算法总是定义一组可以实现某些目标的明确操作，但模式是对解决方案的更高级描述。应用于两个不同程序的相同模式的代码可能不同。</p>
+</blockquote>
+<p>An analogy to an algorithm is a cooking recipe: both have clear steps to achieve a goal. On the other hand, a pattern is more like a blueprint: you can see what the result and its features are, but the exact order of implementation is up to you.</p>
+<blockquote>
+<p>算法的类比是烹饪食谱：两者都有明确的步骤来实现目标。另一方面，模式更像是蓝图：你可以看到结果和它的功能是什么，但确切的实现顺序取决于你。</p>
+</blockquote>
+<h4 id="设计模式的主要元素"><a href="#设计模式的主要元素" class="headerlink" title="设计模式的主要元素"></a>设计模式的主要元素</h4><ul>
+<li><p><strong>Intent</strong> of the pattern briefly describes both the problem and the solution.</p>
+<blockquote>
+<p>模式的<strong>意图</strong>简要描述了问题和解决方案。</p>
+</blockquote>
+</li>
+<li><p><strong>Motivation</strong> further explains the problem and the solution the pattern makes possible.</p>
+<blockquote>
+<p><strong>动机</strong>进一步解释了问题和模式使解决方案成为可能。</p>
+</blockquote>
+</li>
+<li><p><strong>Structure</strong> of classes shows each part of the pattern and how they are related.</p>
+<blockquote>
+<p>类的<strong>结构</strong>显示了模式的每个部分以及它们之间的关系。</p>
+</blockquote>
+</li>
+<li><p><strong>Code example</strong> in one of the popular programming languages makes it easier to grasp the idea behind the pattern.</p>
+<blockquote>
+<p>一种流行的编程语言的<strong>代码示例</strong>可以更轻松地掌握模式背后的思想。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="设计模式的六大原则"><a href="#设计模式的六大原则" class="headerlink" title="设计模式的六大原则"></a>设计模式的六大原则</h4><p><strong>1、开闭原则（Open Close Principle）</strong></p>
+<p>开闭原则的意思是：<strong>对扩展开放，对修改关闭</strong>。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。简言之，是为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p>
+<p><strong>2、里氏代换原则（Liskov Substitution Principle）</strong></p>
+<p>里氏代换原则是面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软件单位的功能不受到影响时，基类才能真正被复用，而派生类也能够在基类的基础上增加新的行为。里氏代换原则是对开闭原则的补充。实现开闭原则的关键步骤就是抽象化，而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p>
+<p><strong>3、依赖倒转原则（Dependence Inversion Principle）</strong></p>
+<p>这个原则是开闭原则的基础，具体内容：针对接口编程，依赖于抽象而不依赖于具体。</p>
+<p><strong>4、接口隔离原则（Interface Segregation Principle）</strong></p>
+<p>这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度。由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合。</p>
+<p><strong>5、迪米特法则，又称最少知道原则（Demeter Principle）</strong></p>
+<p>最少知道原则是指：一个实体应当尽量少地与其他实体之间发生相互作用，使得系统功能模块相对独立。</p>
+<p><strong>6、合成复用原则（Composite Reuse Principle）</strong></p>
+<p>合成复用原则是指：尽量使用合成&#x2F;聚合的方式，而不是使用继承。</p>
+<h3 id="history-of-patterns"><a href="#history-of-patterns" class="headerlink" title="history of patterns"></a>history of patterns</h3><p> 设计模式的发明很难确定于某一具体的人，通常是在代码实践过程对于某类项目一次又一次的反复出现的解决方法，人们最终将其记录命名记录下来。</p>
+<p>Who invented patterns? That’s a good, but not a very accurate, question. Design patterns aren’t obscure, sophisticated concepts—quite the opposite. Patterns are typical solutions to common problems in object-oriented design. When a solution gets repeated over and over in various projects, someone eventually puts a name to it and describes the solution in detail. That’s basically how a pattern gets discovered.</p>
+<blockquote>
+<p>谁发明了图案？这是一个很好的问题，但不是一个非常准确的问题。设计模式并不是晦涩难懂的复杂概念，恰恰相反。模式是面向对象设计中常见问题的典型解决方案。当一个解决方案在各种项目中一遍又一遍地重复时，最终会有人给它起一个名字并详细描述该解决方案。这基本上就是模式被发现的方式。</p>
+</blockquote>
+<p>The concept of patterns was first described by Christopher Alexander in <a target="_blank" rel="noopener" href="https://refactoring.guru/pattern-language-book">A Pattern Language: Towns, Buildings, Construction</a>. The book describes a “language” for designing the urban environment. The units of this language are patterns. They may describe how high windows should be, how many levels a building should have, how large green areas in a neighborhood are supposed to be, and so on.</p>
+<blockquote>
+<p>模式的概念最早是由克里斯托弗·亚历山大（Christopher Alexander）在《模式语言：城镇、建筑物、建筑》一书中描述的。该书描述了一种设计城市环境的“语言”。这种语言的单位是模式。他们可能会描述窗户应该有多高，建筑物应该有多少层，社区中的绿地应该有多大，等等。</p>
+</blockquote>
+<p>The idea was picked up by four authors: Erich Gamma, John Vlissides, Ralph Johnson, and Richard Helm. In 1994, they published <a target="_blank" rel="noopener" href="https://refactoring.guru/gof-book">Design Patterns: Elements of Reusable Object-Oriented Software</a>, in which they applied the concept of design patterns to programming. The book featured 23 patterns solving various problems of object-oriented design and became a best-seller very quickly. Due to its lengthy name, people started to call it “the book by the gang of four” which was soon shortened to simply “the GoF book”.</p>
+<blockquote>
+<p>这个想法被四位作者采纳：Erich Gamma、John Vlissides、Ralph Johnson 和 Richard Helm。1994 年，他们出版了《设计模式：可重用面向对象软件的元素》，其中他们将设计模式的概念应用于编程。这本书收录了 23 种模式，解决了面向对象设计的各种问题，并很快成为畅销书。由于它的名字很长，人们开始称它为“四人帮的书”，很快就被简称为“GoF书”。</p>
+</blockquote>
+<p>Since then, dozens of other object-oriented patterns have been discovered. The “pattern approach” became very popular in other programming fields, so lots of other patterns now exist outside of object-oriented design as well.</p>
+<blockquote>
+<p>从那时起，又发现了数十种其他面向对象的模式。“模式方法”在其他编程领域变得非常流行，因此现在在面向对象设计之外也存在许多其他模式。</p>
+</blockquote>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li><p><strong>Creational patterns</strong> provide object creation mechanisms that increase flexibility and reuse of existing code.</p>
+<blockquote>
+<p>创建模式提供了对象创建机制，这些机制可提高现有代码的灵活性和重用性。</p>
+</blockquote>
+</li>
+<li><p><strong>Structural patterns</strong> explain how to assemble objects and classes into larger structures, while keeping these structures flexible and efficient.</p>
+<blockquote>
+<p>结构模式解释了如何将对象和类组装成更大的结构，同时保持这些结构的灵活性和效率。</p>
+</blockquote>
+</li>
+<li><p><strong>Behavioral patterns</strong> take care of effective communication and the assignment of responsibilities between objects.</p>
+<blockquote>
+<p>行为模式负责对象之间的有效沟通和责任分配。</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">模式 &amp; 描述</th>
+<th align="left">包括</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left"><strong>创建型模式</strong> 这些设计模式提供了一种在创建对象的同时隐藏创建逻辑的方式，<br />而不是使用 new 运算符直接实例化对象。这使得程序在判断针对某个给定实例需要创建哪些对象时更加灵活。</td>
+<td align="left">工厂模式（Factory Pattern) <br />抽象工厂模式（Abstract Factory Pattern）<br />单例模式（Singleton Pattern）<br />建造者模式（Builder Pattern）<br />原型模式（Prototype Pattern）</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"><strong>结构型模式</strong> 这些模式关注对象之间的组合和关系，<br />旨在解决如何构建灵活且可复用的类和对象结构。</td>
+<td align="left">适配器模式（Adapter Pattern）<br />桥接模式（Bridge Pattern）<br />过滤器模式（Filter、Criteria Pattern）<br />组合模式（Composite Pattern）<br />装饰器模式（Decorator Pattern）<br />外观模式（Facade Pattern）<br />享元模式（Flyweight Pattern）<br />代理模式（Proxy Pattern）</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left"><strong>行为型模式</strong> 这些模式关注对象之间的通信和交互，<br />旨在解决对象之间的责任分配和算法的封装。</td>
+<td align="left">责任链模式（Chain of Responsibility Pattern）<br />命令模式（Command Pattern）<br />解释器模式（Interpreter Pattern）<br />迭代器模式（Iterator Pattern）<br />中介者模式（Mediator Pattern）<br />备忘录模式（Memento Pattern）<br />观察者模式（Observer Pattern）<br />状态模式（State Pattern）<br />空对象模式（Null Object Pattern）<br />策略模式（Strategy Pattern）<br />模板模式（Template Pattern）<br />访问者模式（Visitor Pattern）</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"><strong>J2EE 模式</strong> 这些设计模式特别关注表示层。<br />这些模式是由 Sun Java Center 鉴定的。</td>
+<td align="left">MVC 模式（MVC Pattern）<br />业务代表模式（Business Delegate Pattern）<br />组合实体模式（Composite Entity Pattern)数据访问对象模式（Data Access Object Pattern）<br />前端控制器模式（Front Controller Pattern）<br />拦截过滤器模式（Intercepting Filter Pattern）<br />服务定位器模式（Service Locator Pattern）<br />传输对象模式（Transfer Object Pattern）</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/05/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FDesignPatterns/">http://example.com/2024/05/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FDesignPatterns/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/05/28/Git-2/" title="Git(2)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git(2)</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">1.</span> <span class="toc-text">学习资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">2.</span> <span class="toc-text">学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">什么是设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E7%AE%97%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.1.</span> <span class="toc-text">与算法的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%B8%BB%E8%A6%81%E5%85%83%E7%B4%A0"><span class="toc-number">2.1.2.</span> <span class="toc-text">设计模式的主要元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-number">2.1.3.</span> <span class="toc-text">设计模式的六大原则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#history-of-patterns"><span class="toc-number">2.2.</span> <span class="toc-text">history of patterns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">2.3.</span> <span class="toc-text">分类</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FDesignPatterns/" title="设计模式DesignPatterns">设计模式DesignPatterns</a><time datetime="2024-05-31T09:45:53.000Z" title="发表于 2024-05-31 17:45:53">2024-05-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/28/Git-2/" title="Git(2)">Git(2)</a><time datetime="2024-05-28T14:08:43.000Z" title="发表于 2024-05-28 22:08:43">2024-05-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/22/kotlin%E8%AF%AD%E6%B3%95/" title="kotlin语法">kotlin语法</a><time datetime="2024-05-22T15:33:11.000Z" title="发表于 2024-05-22 23:33:11">2024-05-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/21/java-review/" title="java-review">java-review</a><time datetime="2024-05-21T13:06:24.000Z" title="发表于 2024-05-21 21:06:24">2024-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/12/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%881%EF%BC%89/" title="无题">无题</a><time datetime="2024-05-12T14:06:25.588Z" title="发表于 2024-05-12 22:06:25">2024-05-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Drunksweet</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
