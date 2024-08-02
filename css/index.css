@@ -1461,7 +1461,7 @@ canvas:not(#ribbon-canvas),
   --tab-button-active-bg: #fff;
   --card-bg: #fff;
   --sidebar-bg: #f6f8fa;
-  --btn-hover-color: #5846c7;
+  --btn-hover-color: #4f3cc4;
   --btn-color: #fff;
   --btn-bg: #6a5acd;
   --text-bg-hover: rgba(106,90,205,0.7);
@@ -1470,12 +1470,12 @@ canvas:not(#ribbon-canvas),
   --white: #fff;
   --text-highlight-color: #1f2d3d;
   --blockquote-color: #6a737d;
-  --blockquote-bg: rgba(180,171,211,0.1);
+  --blockquote-bg: rgba(70,40,255,0.1);
   --reward-pop: #f5f5f5;
   --toc-link-color: #666261;
   --card-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
   --card-hover-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.09);
-  --pseudo-hover: #5846c7;
+  --pseudo-hover: #4f3cc4;
   --headline-presudo: #a0a0a0;
   --scrollbar-color: #5846c7;
   --default-bg-color: #6a5acd;
@@ -1565,7 +1565,7 @@ table td {
   vertical-align: middle;
 }
 *::selection {
-  background: #9f95df;
+  background: rgba(72,55,181,0.6);
   color: #f7f7f7;
 }
 button {
@@ -1764,8 +1764,8 @@ figure.highlight pre .javascript .function {
 }
 #article-container code {
   padding: 2px 4px;
-  background: rgba(65,60,79,0.05);
-  color: #6a5acd;
+  background: rgba(65,60,79,0.3);
+  color: #4f3cc4;
 }
 #article-container pre {
   padding: 10px 20px;
@@ -2961,7 +2961,7 @@ h1.page-title + .tag-cloud-list {
   color: #6a5acd;
 }
 #aside-content #card-toc .toc-content .toc-link.active {
-  background: #6a5acd;
+  background: rgba(106,90,205,0.75);
   color: #fff;
 }
 #aside-content .sticky_layout:only-child > :first-child {
@@ -4527,7 +4527,7 @@ h1.page-title + .tag-cloud-list {
 #waline-wrap {
   --waline-font-size: 1.1em;
   --waline-theme-color: #6a5acd;
-  --waline-active-color: #5846c7;
+  --waline-active-color: #4f3cc4;
 }
 #waline-wrap .wl-comment-actions > button:not(last-child) {
   padding-right: 4px;
@@ -5971,7 +5971,7 @@ blockquote.pullquote.right {
   box-shadow: none;
 }
 [data-theme='dark'] #article-container .note code {
-  background: rgba(65,60,79,0.05);
+  background: rgba(65,60,79,0.3);
 }
 [data-theme='dark'] #article-container .aplayer {
   filter: brightness(0.8);
