@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【计算机科学概论】操作系统层 | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#6A5ACD"><meta name="description" content="操作系统层操作系统层负责将硬件和软件结合起来，负责计算机资源的分配  操作系统(operating system,OS):管理计算机资源并为系统交互提供界面的系统软件![[Pasted image 20240809203501.png]] 软件分类 应用软件(application software): 帮助我们解决现实世界问题的程序 系统软件(system software): 管理计算机系统并">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【计算机科学概论】操作系统层">
+<meta property="og:url" content="http://example.com/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="操作系统层操作系统层负责将硬件和软件结合起来，负责计算机资源的分配  操作系统(operating system,OS):管理计算机资源并为系统交互提供界面的系统软件![[Pasted image 20240809203501.png]] 软件分类 应用软件(application software): 帮助我们解决现实世界问题的程序 系统软件(system software): 管理计算机系统并">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/avatar.png">
+<meta property="article:published_time" content="2024-08-09T14:02:38.000Z">
+<meta property="article:modified_time" content="2024-08-20T14:14:20.890Z">
+<meta property="article:author" content="Drunksweet">
+<meta property="article:tag" content="计算机科学概论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.png"><link rel="shortcut icon" href="/img/joker.png"><link rel="canonical" href="http://example.com/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Drunksweet","link":"链接: ","source":"来源: 焦糖酒的妙妙屋","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【计算机科学概论】操作系统层',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-20 22:14:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#5846c7')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#6A5ACD')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/topBkgOne.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="焦糖酒的妙妙屋"><img class="site-icon" src="/img/joker.png"/><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【计算机科学概论】操作系统层</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-09T14:02:38.000Z" title="发表于 2024-08-09 22:02:38">2024-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-08-20T14:14:20.890Z" title="更新于 2024-08-20 22:14:20">2024-08-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【计算机科学概论】操作系统层"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="操作系统层"><a href="#操作系统层" class="headerlink" title="操作系统层"></a>操作系统层</h1><p>操作系统层负责将硬件和软件结合起来，负责计算机资源的分配</p>
+<ul>
+<li><strong>操作系统(operating system,OS)</strong>:管理计算机资源并为系统交互提供界面的系统软件![[Pasted image 20240809203501.png]]<ul>
+<li><strong>软件分类</strong><ul>
+<li><strong>应用软件(application software):</strong> 帮助我们解决现实世界问题的程序</li>
+<li><strong>系统软件(system software):</strong> 管理计算机系统并与硬件进行交互的程序</li>
+</ul>
+</li>
+<li><strong>多道程序设计(multiprogramming):</strong> 同时在主存中驻留多个程序,由它们竞争CPU的技术</li>
+<li><strong>[[操作系统发展史]]</strong><ul>
+<li><strong>[[批处理]]</strong></li>
+<li><strong>[[分时]]</strong><ul>
+<li><strong>虚拟机(virtual machine)</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>[[内存管理(memory management)]]</strong>–[[计算机科学概论原书第5版.pdf#page&#x3D;235|计算机科学概论10.2内存管理]]<ul>
+<li><strong>主存</strong>:所有程序在执行时都存储在主存中.这些程序的数据也都存储在主存中,以便程序能够访问它们<ul>
+<li><strong>逻辑地址(logical address)</strong>:对一个存储值的引用,是相对于引用它的程序的</li>
+<li><strong>物理地址(physical address)</strong>: 主存设备中的真实地址</li>
+<li><strong>地址联编(address binding</strong>):逻辑地址和物理地址间的映射</li>
+</ul>
+</li>
+<li><strong>单块内存管理(single contiguous memory management):</strong> 把应用程序载入一段连续的内存区域的内存管理方法![[Pasted image 20240809224200.png]]</li>
+<li><strong>分区内存管理</strong>![[Pasted image 20240809224601.png]]<ul>
+<li><strong>固定分区法(fixed-partition technique):</strong> 把内存分成特定数目的分区以载入程序的内存管理方法<ul>
+<li><strong>适合最先匹配和最佳匹配</strong></li>
+</ul>
+</li>
+<li><strong>动态分区法(dynamic-partition technique):</strong> 根据容纳程序的需要对内存分区的内存管理方法<ul>
+<li><strong>适合最差匹配</strong></li>
+</ul>
+</li>
+<li><strong>基址寄存器(base register):</strong> 存放当前分区的起始地址的寄存器</li>
+<li><strong>界限寄存器(bounds register):</strong> 存放当前分区的长度的寄存器</li>
+<li><strong>分区选择法</strong><ul>
+<li><strong>最先匹配</strong>:把第一个足够容纳程序的分区分配给程序</li>
+<li><strong>最佳匹配</strong>:把最小的能够容纳程序的分区分配给它</li>
+<li><strong>最差匹配</strong>:把最大的能够容纳程序的分区分配给它</li>
+<li>![[Pasted image 20240809225318.png]]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>✨分页内存管理(paged memory technique):</strong> 主存被分成小的大小固定的存储块(帧),进程被划分成页–[[计算机科学概论原书第5版.pdf#page&#x3D;238|计算机科学概论10.2.3页式内存管理]]![[Pasted image 20240809231833.png]]<ul>
+<li><strong>帧(frame):</strong> 大小固定的小部分主存,用于存放进程页</li>
+<li><strong>页(page):</strong> 大小固定的一部分进程,存储在内存帧中</li>
+<li><strong>✨页映射表(Page Map Table, PMT):</strong> 操作系统用于记录页和帧直接的关系的表 –[[计算机科学概论原书第5版.pdf#page&#x3D;239|计算机科学概论【页映射表】]]</li>
+<li><strong>请求分页(demand paging):</strong>  页式内存管理法的拓展,只有当页面被引用(请求)时才会被载入内存<ul>
+<li><strong>页面交换(page swap):</strong> 把一个页面从二级存储设备载入内存,通常会使另一个页面从内存中删除</li>
+<li><strong>虚拟内存(virtual memory);</strong> 由于整个程序不必同时处于内存而造成的程序大小没有限制的假象</li>
+<li><strong>系统颠簸(thrashing):</strong> 频繁的页面交换照成的低效处理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>进程管理(process management)</strong>: 管理每个进程使用CPU的时间<ul>
+<li><strong>进程状态(process state):</strong> 在操作系统的管理下,进程历经的概念性阶段![[Pasted image 20240809233933.png]]<ul>
+<li><strong>创建</strong></li>
+<li><strong>准备就绪</strong>:等待使用CPU</li>
+<li><strong>运行</strong>:正在使用CPU</li>
+<li><strong>等待</strong>:等待资源(处理CPU以外的资源)</li>
+<li><strong>终止</strong>:进程硬件完成它的执行</li>
+</ul>
+</li>
+<li><strong>[[进程控制块(process control block,  PCB)]]:</strong> 操作系统管理进程信息使用的数据结构<ul>
+<li><strong>上下文切换(context switch):</strong> 当一个进程移出CPU,另一个进程取代它时发生的寄存器信息交换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>CPU调度</strong>:确定哪个处于准备状态的进程移入运行状态<ul>
+<li><strong>[[CPU调度算法]]</strong><ul>
+<li><strong>非抢先调度(nonpreemptive scheduling):</strong> 当当前执行的进程自愿放弃了CPU时发生的CPU调度<ul>
+<li><strong>先到先服务(FCFS)</strong></li>
+<li><strong>最短作业优先(SJN)</strong></li>
+</ul>
+</li>
+<li><strong>抢先调度(preemptive scheduling):</strong> 当操作系统决定照顾另一个进程而抢占当前执行进程的CPU资源时发生的CPU调度<ul>
+<li><strong>轮询法(RR)</strong><ul>
+<li><strong>时间片(time slice):</strong> 在CPU轮询算法中分配给每个进程的时间量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>周转周期(turnaround time):</strong> 从进程进入准备就绪状态到它最终完成之间的时间间隔,是评估CPU调度算法的标准</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>文件系统和目录</strong><ul>
+<li><strong>文件系统(file system):</strong> 操作系统为它管理的文件提供的逻辑视图<ul>
+<li><strong>文件(file)</strong>:数据的有名集合,用于组织二级存储设备<ul>
+<li><strong>文本文件(text file):</strong> 包含字符(ASCII或Unicode字符集里的字符)的文件,使用<strong>文本编辑器</strong>便可以创建,查看和修改文本文件的内容<ul>
+<li><strong>源文件:</strong> 高级语言编写的程序会被存储位文本文件</li>
+</ul>
+</li>
+<li><strong>二进制文件(binary file):</strong> 包含特定格式的数据的文件,要求给位串一个特定的解释,得使用<strong>特定的解释器</strong>来阅读或修改二进制文件</li>
+</ul>
+</li>
+<li><strong>文件类型(file type)</strong>:文件中存放的关于类型的信息</li>
+<li><strong>文件拓展名(file extension)</strong>:文件名中<strong>说明</strong>文件类型的部分(只是说明,改变文件拓展名不会改变文件中的数据或它的内部格式)</li>
+<li>![[Pasted image 20240810011448.png]]</li>
+<li>[[计算机科学概论原书第5版.pdf#page&#x3D;251|操作系统为不同文件类型根据文件拓展名匹配相应的解释器]]![[Pasted image 20240810011908.png]]</li>
+<li><strong>文件操作</strong><ul>
+<li><strong>具体的可执行操作</strong><ul>
+<li><strong>创建文件</strong></li>
+<li><strong>删除文件</strong></li>
+<li><strong>打开文件</strong></li>
+<li><strong>关闭文件</strong></li>
+<li><strong>从文件中读取数据</strong></li>
+<li><strong>把数据写入文件</strong></li>
+<li><strong>重定位文件中的当前文件指针</strong></li>
+<li><strong>把数据附加到文件结尾</strong></li>
+<li><strong>删减文件(删除它的内容)</strong></li>
+<li><strong>重命名文件</strong></li>
+<li><strong>复制文件</strong></li>
+</ul>
+</li>
+<li><strong>操作系统维护两个表</strong><ul>
+<li>一个表说明哪些内存块是空的(也就是说可以用的)</li>
+<li>为每个目录维护一个表,以记录该目录下的文件的信息</li>
+</ul>
+</li>
+<li><strong>文件指针</strong><ul>
+<li><strong>读指针(地址)</strong></li>
+<li><strong>写指针(地址)</strong></li>
+</ul>
+</li>
+<li><strong>[[文件访问(file access)]]</strong>![[Pasted image 20240810014048.png]]<ul>
+<li><strong>顺序文件访问(sequential file access):</strong> 以线性方式访问文件中的数据的方式</li>
+<li><strong>直接文件访问(direct file access):</strong> 通过指定逻辑记录编号直接访问文件中的数据方法</li>
+</ul>
+</li>
+<li><strong>[[文件保护]]</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>目录(directory):</strong> 文件的有名集合、![[Pasted image 20240810015125.png]]<ul>
+<li><strong>目录树(directory tree):</strong> 展示文件系统的嵌套目录组织的结构</li>
+<li><strong>根目录(root directory):</strong> 包含其他所有目录的最高层目录</li>
+<li><strong>工作目录(working directory):</strong> 当前活动的子目录</li>
+</ul>
+</li>
+<li><strong>路径名</strong><ul>
+<li><strong>路径(path):</strong> 文件或子目录在文件系统中的位置的文本名字</li>
+<li><strong>绝对路径(absolute path):</strong> 从根目录开始，包括后面所有后继子目录的路径</li>
+<li><strong>相对路径(relative path):</strong> 从当前工作目录开始的路径</li>
+</ul>
+</li>
+<li><strong>磁盘调度(disk scheduling):</strong> 决定先满足哪个磁盘I&#x2F;O请求的操作<ul>
+<li>先到先服务磁盘调度法</li>
+<li>最短寻道时间优先磁盘调度法</li>
+<li>SCAN磁盘调度法</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/">http://example.com/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA/">计算机科学概论</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/10/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%B1%82/" title="【计算机科学概论】程序设计层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【计算机科学概论】程序设计层</div></div></a></div><div class="next-post pull-right"><a href="/2024/08/08/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A1%AC%E4%BB%B6%E5%B1%82/" title="【计算机科学概论】硬件层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【计算机科学概论】硬件层</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/08/07/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E4%BF%A1%E6%81%AF%E5%B1%82/" title="【计算机科学概论】信息层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-07</div><div class="title">【计算机科学概论】信息层</div></div></a></div><div><a href="/2024/08/08/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A1%AC%E4%BB%B6%E5%B1%82/" title="【计算机科学概论】硬件层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-08</div><div class="title">【计算机科学概论】硬件层</div></div></a></div><div><a href="/2024/08/10/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%B1%82/" title="【计算机科学概论】程序设计层"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-10</div><div class="title">【计算机科学概论】程序设计层</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description">前行有光，是赶路人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82"><span class="toc-number">1.</span> <span class="toc-text">操作系统层</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/10/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%B1%82/" title="【计算机科学概论】程序设计层">【计算机科学概论】程序设计层</a><time datetime="2024-08-10T14:03:35.000Z" title="发表于 2024-08-10 22:03:35">2024-08-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/" title="【计算机科学概论】操作系统层">【计算机科学概论】操作系统层</a><time datetime="2024-08-09T14:02:38.000Z" title="发表于 2024-08-09 22:02:38">2024-08-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/08/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A1%AC%E4%BB%B6%E5%B1%82/" title="【计算机科学概论】硬件层">【计算机科学概论】硬件层</a><time datetime="2024-08-08T14:02:50.000Z" title="发表于 2024-08-08 22:02:50">2024-08-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/07/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E4%BF%A1%E6%81%AF%E5%B1%82/" title="【计算机科学概论】信息层">【计算机科学概论】信息层</a><time datetime="2024-08-07T14:03:24.000Z" title="发表于 2024-08-07 22:03:24">2024-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/30/ios%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E5%88%9D%E4%BD%93%E9%AA%8C/" title="ios原生开发初体验">ios原生开发初体验</a><time datetime="2024-07-29T20:10:11.000Z" title="发表于 2024-07-30 04:10:11">2024-07-30</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/topBkgOne.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Drunksweet</div><div class="footer_custom_text">前行有光，是赶路人</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

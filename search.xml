@@ -4,6 +4,82 @@
   
     
     <entry>
+      <title>【计算机科学概论】程序设计层</title>
+      <link href="/2024/08/10/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%B1%82/"/>
+      <url>/2024/08/10/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="程序设计层"><a href="#程序设计层" class="headerlink" title="程序设计层"></a>程序设计层</h1><p>程序设计层讨论的是如何使用计算机系统，引出机器语言</p><ul><li><strong>低级程序设计语言</strong><ul><li><strong>计算机操作</strong><ul><li><strong>可编程&amp;存储&amp;检索&amp;处理</strong></li></ul></li><li><strong>[[机器语言（Machine Language）]]</strong>:由计算机直接使用的二进制编码指令构成的语言<ul><li><strong>[[硬件依赖性]]</strong>: 机器代码因机器的不同而不同,即每种类型的CPU都有它能理解的机器语言</li><li><strong>[[解决机器语言不同的方法]]</strong><ul><li><strong>[[虚拟机（Virtual Machine，VM）]]</strong><ul><li><strong>[[JVM]]</strong></li><li><strong>Pep&#x2F;8</strong>–[[计算机科学概论原书第5版.pdf#page&#x3D;103|计算机基础科学概论Pep&#x2F;8]]<ul><li><strong>体系结构</strong>![[Pasted image 20240808175802.png]]</li><li><strong>指令格式</strong>![[Pasted image 20240808180717.png]]<ul><li><strong>8位指令说明符(可选的)</strong>:说明要执行上面操作和如何解释操作数的位置.指令说明符的格式根据表示一个具体操作所用的比特数不同而不同![[Pasted image 20240808180741.png]]<ul><li><strong>操作码(4bit-8bit)</strong>:长度在4bit到8bit不等<ul><li><strong>4bit操作码</strong><ul><li>第5位为<strong>寄存器说明符</strong>:指定使用哪个寄存器</li><li>3bit<strong>寻址模式说明符</strong>:表示怎么解析指令中的操作数部分👇<ul><li><strong>寻址模式</strong><ul><li><strong>立即寻址模式</strong>![[Pasted image 20240808181718.png]]</li><li><strong>直接寻址模式</strong>![[Pasted image 20240808181731.png]]</li></ul></li></ul></li></ul></li></ul></li></ul></li><li><strong>16位操作数说明符</strong>:操作数的本身或者操作数的地址(有些指令没有操作数说明符)</li><li><strong>一元指令</strong>:没有操作数(要处理的数据)</li></ul></li></ul></li></ul></li></ul></li></ul></li><li><strong>[[汇编语言（Assembly Language）]]</strong>:一种低级语言,用助记码表示特定计算机的机器语言指令<ul><li>汇编器(assembler):把汇编语言程序翻译成机器码的程序![[Pasted image 20240808221123.png]]</li><li><strong>汇编器指令(assembler directive)</strong>:翻译程序使用的指令</li></ul></li><li><strong>伪代码(peseudocode)</strong>:一种表达算法的语言</li></ul></li><li><strong>算法与数据结构</strong><ul><li><strong>[[算法(algorithm)]]</strong>:在有限的时间内用有效的数据解决问题或子问题的明确指令集合</li><li><strong>[[数据结构(data structure)]]</strong>:一种抽象数据类型中的符合数据域的实现</li></ul></li><li><strong>面向对象设计与高级程序语言设计</strong><ul><li><strong>面向对象设计OOD</strong></li><li><strong>高级程序语言</strong><ul><li><strong>翻译过程</strong><ul><li><strong>编译器(compiler)</strong>:把高级语言编写的程序翻译成机器码的程序![[Pasted image 20240808223347.png]]<ul><li>同样具有硬件依赖性,多类型机器上使用一个高级语言,需有多个编译器</li></ul></li><li><strong>解释器(interpreter)</strong>:输入用高级语言编写的程序,指导计算机执行每个语言指定的动作的程序(边翻译边执行)</li><li><strong>[[JVM]]</strong><ul><li><strong>[[java语法回眸|java]]</strong></li><li><strong>字节码(bytecode)</strong>:编译Java源代码使用的标准机器语言</li></ul></li></ul></li><li><strong>[[程序设计语言范型]]</strong><ul><li><strong>面向过程编程（Procedural Programming）</strong></li><li><strong>面向对象编程（Object-Oriented Programming，OOP）</strong></li></ul></li></ul></li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计算机科学概论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【计算机科学概论】操作系统层</title>
+      <link href="/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/"/>
+      <url>/2024/08/09/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="操作系统层"><a href="#操作系统层" class="headerlink" title="操作系统层"></a>操作系统层</h1><p>操作系统层负责将硬件和软件结合起来，负责计算机资源的分配</p><ul><li><strong>操作系统(operating system,OS)</strong>:管理计算机资源并为系统交互提供界面的系统软件![[Pasted image 20240809203501.png]]<ul><li><strong>软件分类</strong><ul><li><strong>应用软件(application software):</strong> 帮助我们解决现实世界问题的程序</li><li><strong>系统软件(system software):</strong> 管理计算机系统并与硬件进行交互的程序</li></ul></li><li><strong>多道程序设计(multiprogramming):</strong> 同时在主存中驻留多个程序,由它们竞争CPU的技术</li><li><strong>[[操作系统发展史]]</strong><ul><li><strong>[[批处理]]</strong></li><li><strong>[[分时]]</strong><ul><li><strong>虚拟机(virtual machine)</strong></li></ul></li></ul></li><li><strong>[[内存管理(memory management)]]</strong>–[[计算机科学概论原书第5版.pdf#page&#x3D;235|计算机科学概论10.2内存管理]]<ul><li><strong>主存</strong>:所有程序在执行时都存储在主存中.这些程序的数据也都存储在主存中,以便程序能够访问它们<ul><li><strong>逻辑地址(logical address)</strong>:对一个存储值的引用,是相对于引用它的程序的</li><li><strong>物理地址(physical address)</strong>: 主存设备中的真实地址</li><li><strong>地址联编(address binding</strong>):逻辑地址和物理地址间的映射</li></ul></li><li><strong>单块内存管理(single contiguous memory management):</strong> 把应用程序载入一段连续的内存区域的内存管理方法![[Pasted image 20240809224200.png]]</li><li><strong>分区内存管理</strong>![[Pasted image 20240809224601.png]]<ul><li><strong>固定分区法(fixed-partition technique):</strong> 把内存分成特定数目的分区以载入程序的内存管理方法<ul><li><strong>适合最先匹配和最佳匹配</strong></li></ul></li><li><strong>动态分区法(dynamic-partition technique):</strong> 根据容纳程序的需要对内存分区的内存管理方法<ul><li><strong>适合最差匹配</strong></li></ul></li><li><strong>基址寄存器(base register):</strong> 存放当前分区的起始地址的寄存器</li><li><strong>界限寄存器(bounds register):</strong> 存放当前分区的长度的寄存器</li><li><strong>分区选择法</strong><ul><li><strong>最先匹配</strong>:把第一个足够容纳程序的分区分配给程序</li><li><strong>最佳匹配</strong>:把最小的能够容纳程序的分区分配给它</li><li><strong>最差匹配</strong>:把最大的能够容纳程序的分区分配给它</li><li>![[Pasted image 20240809225318.png]]</li></ul></li></ul></li><li><strong>✨分页内存管理(paged memory technique):</strong> 主存被分成小的大小固定的存储块(帧),进程被划分成页–[[计算机科学概论原书第5版.pdf#page&#x3D;238|计算机科学概论10.2.3页式内存管理]]![[Pasted image 20240809231833.png]]<ul><li><strong>帧(frame):</strong> 大小固定的小部分主存,用于存放进程页</li><li><strong>页(page):</strong> 大小固定的一部分进程,存储在内存帧中</li><li><strong>✨页映射表(Page Map Table, PMT):</strong> 操作系统用于记录页和帧直接的关系的表 –[[计算机科学概论原书第5版.pdf#page&#x3D;239|计算机科学概论【页映射表】]]</li><li><strong>请求分页(demand paging):</strong>  页式内存管理法的拓展,只有当页面被引用(请求)时才会被载入内存<ul><li><strong>页面交换(page swap):</strong> 把一个页面从二级存储设备载入内存,通常会使另一个页面从内存中删除</li><li><strong>虚拟内存(virtual memory);</strong> 由于整个程序不必同时处于内存而造成的程序大小没有限制的假象</li><li><strong>系统颠簸(thrashing):</strong> 频繁的页面交换照成的低效处理</li></ul></li></ul></li></ul></li><li><strong>进程管理(process management)</strong>: 管理每个进程使用CPU的时间<ul><li><strong>进程状态(process state):</strong> 在操作系统的管理下,进程历经的概念性阶段![[Pasted image 20240809233933.png]]<ul><li><strong>创建</strong></li><li><strong>准备就绪</strong>:等待使用CPU</li><li><strong>运行</strong>:正在使用CPU</li><li><strong>等待</strong>:等待资源(处理CPU以外的资源)</li><li><strong>终止</strong>:进程硬件完成它的执行</li></ul></li><li><strong>[[进程控制块(process control block,  PCB)]]:</strong> 操作系统管理进程信息使用的数据结构<ul><li><strong>上下文切换(context switch):</strong> 当一个进程移出CPU,另一个进程取代它时发生的寄存器信息交换</li></ul></li></ul></li><li><strong>CPU调度</strong>:确定哪个处于准备状态的进程移入运行状态<ul><li><strong>[[CPU调度算法]]</strong><ul><li><strong>非抢先调度(nonpreemptive scheduling):</strong> 当当前执行的进程自愿放弃了CPU时发生的CPU调度<ul><li><strong>先到先服务(FCFS)</strong></li><li><strong>最短作业优先(SJN)</strong></li></ul></li><li><strong>抢先调度(preemptive scheduling):</strong> 当操作系统决定照顾另一个进程而抢占当前执行进程的CPU资源时发生的CPU调度<ul><li><strong>轮询法(RR)</strong><ul><li><strong>时间片(time slice):</strong> 在CPU轮询算法中分配给每个进程的时间量</li></ul></li></ul></li><li><strong>周转周期(turnaround time):</strong> 从进程进入准备就绪状态到它最终完成之间的时间间隔,是评估CPU调度算法的标准</li></ul></li></ul></li></ul></li><li><strong>文件系统和目录</strong><ul><li><strong>文件系统(file system):</strong> 操作系统为它管理的文件提供的逻辑视图<ul><li><strong>文件(file)</strong>:数据的有名集合,用于组织二级存储设备<ul><li><strong>文本文件(text file):</strong> 包含字符(ASCII或Unicode字符集里的字符)的文件,使用<strong>文本编辑器</strong>便可以创建,查看和修改文本文件的内容<ul><li><strong>源文件:</strong> 高级语言编写的程序会被存储位文本文件</li></ul></li><li><strong>二进制文件(binary file):</strong> 包含特定格式的数据的文件,要求给位串一个特定的解释,得使用<strong>特定的解释器</strong>来阅读或修改二进制文件</li></ul></li><li><strong>文件类型(file type)</strong>:文件中存放的关于类型的信息</li><li><strong>文件拓展名(file extension)</strong>:文件名中<strong>说明</strong>文件类型的部分(只是说明,改变文件拓展名不会改变文件中的数据或它的内部格式)</li><li>![[Pasted image 20240810011448.png]]</li><li>[[计算机科学概论原书第5版.pdf#page&#x3D;251|操作系统为不同文件类型根据文件拓展名匹配相应的解释器]]![[Pasted image 20240810011908.png]]</li><li><strong>文件操作</strong><ul><li><strong>具体的可执行操作</strong><ul><li><strong>创建文件</strong></li><li><strong>删除文件</strong></li><li><strong>打开文件</strong></li><li><strong>关闭文件</strong></li><li><strong>从文件中读取数据</strong></li><li><strong>把数据写入文件</strong></li><li><strong>重定位文件中的当前文件指针</strong></li><li><strong>把数据附加到文件结尾</strong></li><li><strong>删减文件(删除它的内容)</strong></li><li><strong>重命名文件</strong></li><li><strong>复制文件</strong></li></ul></li><li><strong>操作系统维护两个表</strong><ul><li>一个表说明哪些内存块是空的(也就是说可以用的)</li><li>为每个目录维护一个表,以记录该目录下的文件的信息</li></ul></li><li><strong>文件指针</strong><ul><li><strong>读指针(地址)</strong></li><li><strong>写指针(地址)</strong></li></ul></li><li><strong>[[文件访问(file access)]]</strong>![[Pasted image 20240810014048.png]]<ul><li><strong>顺序文件访问(sequential file access):</strong> 以线性方式访问文件中的数据的方式</li><li><strong>直接文件访问(direct file access):</strong> 通过指定逻辑记录编号直接访问文件中的数据方法</li></ul></li><li><strong>[[文件保护]]</strong></li></ul></li></ul></li></ul></li><li><strong>目录(directory):</strong> 文件的有名集合、![[Pasted image 20240810015125.png]]<ul><li><strong>目录树(directory tree):</strong> 展示文件系统的嵌套目录组织的结构</li><li><strong>根目录(root directory):</strong> 包含其他所有目录的最高层目录</li><li><strong>工作目录(working directory):</strong> 当前活动的子目录</li></ul></li><li><strong>路径名</strong><ul><li><strong>路径(path):</strong> 文件或子目录在文件系统中的位置的文本名字</li><li><strong>绝对路径(absolute path):</strong> 从根目录开始，包括后面所有后继子目录的路径</li><li><strong>相对路径(relative path):</strong> 从当前工作目录开始的路径</li></ul></li><li><strong>磁盘调度(disk scheduling):</strong> 决定先满足哪个磁盘I&#x2F;O请求的操作<ul><li>先到先服务磁盘调度法</li><li>最短寻道时间优先磁盘调度法</li><li>SCAN磁盘调度法</li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计算机科学概论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【计算机科学概论】硬件层</title>
+      <link href="/2024/08/08/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A1%AC%E4%BB%B6%E5%B1%82/"/>
+      <url>/2024/08/08/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E7%A1%AC%E4%BB%B6%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="硬件层"><a href="#硬件层" class="headerlink" title="硬件层"></a>硬件层</h1><p>硬件层从构成计算机的硬件角度研究计算机如何如何使用电信号来表示和操作二进制值</p><ul><li><strong>门和电路</strong><ul><li><strong>电信号</strong></li><li><strong>电平</strong></li><li><strong>[[门(gate)|门(gate)]]</strong>:对电信号执行基本运算的设备,介绍一个或多个输入信号,生产一个输出信号<ul><li>门的分类</li><li>门的构造</li></ul></li><li><strong>[[电路(circuit)]]</strong>:相互关联的门组合,用于实现特定的逻辑函数</li><li><strong>[[布尔代数（Boolean algebra）]]</strong></li></ul></li><li><strong>计算部件</strong>–[[计算机科学概论原书第5版.pdf#page&#x3D;95|计算机科学概论第5章]]<ul><li><strong>[[计算机硬件]]</strong></li><li><strong>[[计算机科学概论原书第5版.pdf#page&#x3D;99|计算机科学概论【5.2存储程序的概念】]]</strong><ul><li><strong>冯诺依曼体系结构</strong>![[Pasted image 20240807224846.png]]<ul><li><strong>存储单元</strong></li><li><strong>算数逻辑单元(Arithmetic&#x2F;Logic Uint , ALU):</strong> 执行算数运算(加减乘除)和逻辑运算(俩个值的比较)的计算机部件<ul><li><strong>[[寄存器(register)]]</strong>:CPU中的小块存储区域,用于存储中间值或特殊数据</li></ul></li><li><strong>输入单元</strong></li><li><strong>输出单元</strong></li><li>✨<strong>控制单元(control unit)</strong>  [[计算机科学概论原书第5版.pdf#page&#x3D;103]] <ul><li><strong>特殊寄存器</strong><ul><li><strong>指令寄存器(Instruction Register , IR)</strong>:存放当前正在执行的指令的寄存器</li><li><strong>程序计数器(Program Counter , PC)</strong>:存放下一条要执行的指令的地址的寄存器</li></ul></li></ul></li><li><strong>CPU</strong>:算数逻辑单元和控制单元的组合</li></ul></li><li>✨<strong>读取-执行周期</strong>–[[计算机科学概论原书第5版.pdf#page&#x3D;104|计算机科学概论5.2.2]]<ul><li>读取下一条指令</li><li>译解指令</li><li>如果需要,读取数据</li><li>执行指令</li></ul></li></ul></li><li><strong>嵌入式系统</strong>:作为大型系统的一部分,为完成小范围功能而专门设计的计算机.通常将一个嵌入式系统集成在单个微型处理器芯片上,程序被存储在ROM上<ul><li><strong>只读存储器（ROM，Read-Only Memory）</strong>:计算机中的一种非易失性存储器，这意味着即使在断电后，存储在其中的数据也不会丢失。ROM通常用于存储固件，即计算机在启动时所需的基本程序和操作系统的初始加载代码</li></ul></li><li><strong>并行体系结构</strong><ul><li><strong>并行计算</strong></li></ul></li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计算机科学概论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【计算机科学概论】信息层</title>
+      <link href="/2024/08/07/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E4%BF%A1%E6%81%AF%E5%B1%82/"/>
+      <url>/2024/08/07/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E6%A6%82%E8%AE%BA%E3%80%91%E4%BF%A1%E6%81%AF%E5%B1%82/</url>
+      
+        <content type="html"><![CDATA[<h1 id="信息层"><a href="#信息层" class="headerlink" title="信息层"></a>信息层</h1><p>信息层介绍计算机科学中如何理解和处理信息,通过数字化的方法将现实的模拟信号转化为数字信号.以二进制的形式记录</p><ul><li><p><strong>数字</strong></p><ul><li><strong>数的分类</strong><ul><li><strong>自然数：</strong> 从1开始的正整数（1, 2, 3, …）。有时也包括0（0, 1, 2, 3, …）。</li><li><strong>整数：</strong> 包括所有自然数、它们的负数以及0（… -3, -2, -1, 0, 1, 2, 3, …）。</li><li><strong>有理数：</strong> 可以表示为两个整数之比的数（a&#x2F;b，其中a和b都是整数且b≠0）。所有整数都是有理数，因为它们可以表示为自身与1的比（如5可以表示为5&#x2F;1）。</li><li><strong>实数：</strong> 包括所有有理数和无理数。无理数是不能表示为两个整数之比的数（如√2, π）。</li><li><strong>复数：</strong> 包括实数和虚数。形式为a + bi，其中a和b是实数，i是虚数单位，满足i² &#x3D; -1。</li></ul></li><li><strong>基数（base）</strong><ul><li><strong>二进制计数系统</strong></li><li><strong>进制转换</strong></li></ul></li></ul></li><li><p><strong>数据表示法</strong></p><ul><li><strong>数据（data）:</strong> 基本值或事实<ul><li><strong>模拟数据（analog data）：</strong> 用连续形式表示的信息 </li><li><strong>数字数据（digital data）：</strong> 用离散形式表示的信息</li></ul></li><li><strong>信息（infomation）：</strong> 用有效的方式组织或处理过的数据</li><li><strong>多媒体数据类型</strong><ul><li><strong>数字</strong></li><li><strong>文本</strong></li><li><strong>音频</strong></li><li><strong>图像和图形</strong></li><li><strong>视频</strong></li></ul></li><li><strong>数据压缩（data compression）</strong><ul><li><strong>压缩率（compression ratio）：</strong> 压缩后的数据大小除以原始数据大小的值，说明了压缩的程度</li><li><strong>无损压缩（lossless compression）：</strong> 不会丢失信息的数据压缩技术</li><li><strong>有损压缩（lossy compression）：</strong> 会丢失信息的数据压缩技术</li></ul></li><li><strong>数字数据表示法</strong><ul><li><strong>负数表示法</strong><ul><li><strong>符号数值表示法(signed-magnitude representation)</strong>: 通过+-符号的形式表示数所属的分类(正数或负数)</li><li><strong>定长量数</strong>:若只允许用定量的数值,则可以用一半数来表示正数,另一半数表示负数,符号由数的数值决定<ul><li>[[补码|补码(Two’s Complement)]]</li></ul></li></ul></li><li><strong>实数表示法</strong><ul><li><strong>浮点表示法(floating point):</strong> 表面了符号,尾数和指数的实数表示法</li><li><strong>科学计数法(scientific notation)</strong></li></ul></li><li><strong>文本表示法</strong><ul><li><strong>字符集(character set):</strong><ul><li><strong>ASCII字符集</strong></li><li><strong>Unicode字符集</strong></li></ul></li><li><strong>[[文本压缩]]</strong><ul><li><strong>关键字编码</strong></li><li><strong>行程程度编码</strong></li><li><strong>[[文本压缩#^c05359|赫夫曼编码]]</strong></li></ul></li></ul></li><li><strong>音频数据表示法</strong><ul><li><strong>[[音频数据格式]]</strong></li></ul></li><li><strong>图像和图像表示法</strong><ul><li><strong>颜色表示法</strong></li><li><strong>数字化图像和图形</strong><ul><li><strong>像素(pixel)</strong></li></ul></li><li><strong>图像的矢量表示法</strong><ul><li><strong>矢量图形</strong></li></ul></li></ul></li><li><strong>视频表示法</strong><ul><li><strong>[[视频格式]]</strong></li><li><strong>[[视频格式所涉及的技术]]</strong><ul><li><strong>编码方式</strong></li><li><strong>容器</strong></li><li><strong>压缩技术</strong></li></ul></li></ul></li></ul></li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 计算机科学概论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ios原生开发初体验</title>
       <link href="/2024/07/30/ios%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
       <url>/2024/07/30/ios%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
