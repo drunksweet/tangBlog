@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Tailwind CSS初体验</title>
+      <link href="/2024/10/10/Tailwind-CSS%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
+      <url>/2024/10/10/Tailwind-CSS%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
+      
+        <content type="html"><![CDATA[<p>还是把我想说的话放前面吧，对于独立React小项目的快速开发来说，Tailwind是值得尝试的，我也就仅仅讨论在我目前的状态下（苦逼大学生🤓，个人独立项目（没前端队友，没专业设计）），被拉去打比赛，最后还是“能者多劳”，前端的活最终还是一个人大包大揽🚬🚬🚬。</p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>好久没写博文了，最近在努力从安卓转前端，一直都在学（技术力不够不配写博文）。看了<a href="https://www.robinwieruch.de/react-css-styling/">如何在 React 中使用 CSS 样式 — How to CSS Style in React (robinwieruch.de)</a>这篇文章，了解了下Tailwind Css，被其的高效惊喜到了。</p><p>我个人的感觉Tailwind是在传统的css上抽象了一层，一切优缺点都是有此带来的。不像是Sass，只是作为css的一个拓展超集，爱用就用，不用不用。</p><h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><h3 id="团队配合"><a href="#团队配合" class="headerlink" title="团队配合"></a>团队配合</h3><p>本来奇怪为什么没看到什么主流项目在用，搜索了下主要争议点还是在-目前不适合团队配合，毕竟原子化CSS是学习成本的东西也没流行到成为一种规范，在需要多人配合中大型项目不好合作。目前这东西还得是公司自上而下的推行才有可能在团队项目里使用。<br>这一点是不得不去考虑的，毕竟偏离主流的技术在大型项目中是没有用武之地的，这东西在开源社区中也很难融入，仍然得写回Sass。</p><h3 id="复杂性转移"><a href="#复杂性转移" class="headerlink" title="复杂性转移"></a>复杂性转移</h3><p>这其实我感觉也不能算缺点。<br>虽然有些人也有提到tw在实现某些业务方面（不同主题切换）会比较繁琐，但我认为是属于次要的，毕竟其本质任务还是负责view的部分。tw将某些常用的任务简化后不可避免的将复杂性转移到其他地方，只要不是致命的缺陷（无法通过技术解决），将常用的功能简化，不常用的功能复杂化也是可以接受的，平均下来仍然是好事。</p><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><h3 id="写起来爽"><a href="#写起来爽" class="headerlink" title="写起来爽"></a>写起来爽</h3><p>我一个独狗🚬🤓写起来怎么爽怎么来（bushi），官网介绍的就挺准确的“只需书写 HTML 代码，无需书写 CSS，即可快速构建美观的网站”，主要还是得接受这种unocss思想，我现在还说不准其对错，感受就完事了。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>究竟tw这类Utility-First-CSS能不能发展完善，将来有什么发展的方向还是值得瞻望的</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C盘扩容</title>
       <link href="/2024/08/24/C%E7%9B%98%E6%89%A9%E5%AE%B9/"/>
       <url>/2024/08/24/C%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
