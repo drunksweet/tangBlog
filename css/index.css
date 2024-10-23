@@ -1769,7 +1769,7 @@ figure.highlight pre .javascript .function {
 }
 #article-container code {
   padding: 2px 4px;
-  background: rgba(65,60,79,0.35);
+  background: rgba(65,60,79,0.3);
   color: #4f3cc4;
 }
 #article-container pre {
@@ -6067,7 +6067,7 @@ blockquote.pullquote.right {
   box-shadow: none;
 }
 [data-theme='dark'] #article-container .note code {
-  background: rgba(65,60,79,0.35);
+  background: rgba(65,60,79,0.3);
 }
 [data-theme='dark'] #article-container .aplayer {
   filter: brightness(0.8);
