@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>postObsidian个人知识管理工具体验分享</title>
+      <link href="/tangBlog/2024/10/24/Obsidian%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E4%BD%93%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+      <url>/tangBlog/2024/10/24/Obsidian%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E4%BD%93%E9%AA%8C%E5%88%86%E4%BA%AB/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前都是在用Typora作为我的文字记录工具，但暑期的时候看到RSS突发奇想，想要搞一套完整的<strong>信息流</strong>，于是就在寻找合适我的笔记软件，最后选择了Obsidian。<br>obsidian自从9月初使用以来了已将近两个月了，当初忘记写初体验了，现在补上一篇充分体验后的产品报告。</p><h1 id="竞品比较"><a href="#竞品比较" class="headerlink" title="竞品比较"></a>竞品比较</h1><p>当初本就抱着all in one的目的，想找一个功能全面的笔记软件，能满足我的“跨平台记录阅读”的需求，当时比较了市面上主流的几款笔记软件——Notion、Obsidian、印象、Flomo。当然还有幕布、、Bear、石墨、Logseq，但这些都因为精力有限，各种原因导致没能在一开始吸引我进行更深入的体验。</p><h3 id="印象笔记"><a href="#印象笔记" class="headerlink" title="印象笔记"></a>印象笔记</h3><p>印象笔记就纯纯炮灰🤦‍♂️，弹广告我就接受不了一点，各种功能都要付费，更其他俩个一比就是垃圾，特别是国产收购后就开始日渐臃肿发福。还是那句话“我本可以忍受黑暗，如果我不曾见过光明”。</p><h3 id="Flomo"><a href="#Flomo" class="headerlink" title="Flomo"></a>Flomo</h3><p>Flomo的设计的核心理念是“卡牌笔记”，适合碎片化、片段性的文字记录，经过轻度体验不切我本人需求，但是其产品概念还是不错的，很有发展前途，或许将来我会使用。个人感觉flomo和anki联动一下或许能有更好的体验。</p><h3 id="Notion"><a href="#Notion" class="headerlink" title="Notion"></a>Notion</h3><p>确实是个好工具，适合捣鼓的人，有无限可能的人，我愿称之为<strong>最强赛博手账</strong></p><ul><li><strong>优点</strong><ul><li><strong>多功能性</strong>：Notion算是一个很有个性的笔记软件，将<strong>数据库</strong>的概念融入的笔记中，带来了无限的可能。</li><li><strong>高颜值</strong>：Notion的<strong>审美</strong>确实一绝，简单一搞就相当有质感，使用Notion的时候有种做手账的感觉。</li><li><strong>模板</strong>：提供丰富的模板库，用户可以轻松创建不同类型的页面。</li><li><strong>协作功能</strong>：支持多人实时协作，适合团队使用，允许评论、提及等互动。</li></ul></li><li><strong>缺点</strong><ul><li><strong>复杂性</strong>：若需求只是想记录一下文字而言，我认为其功能<strong>过于丰富</strong>，我怕我一搞起来就上头了，不在关注文字本身而是各种形式。其的上手也有较为陡峭的学习曲线。</li><li><strong>通用性</strong>：此外也因为notion形式上的创新，导致了其不像别的软件那样可以轻易的导出md。</li><li><strong>云存储</strong>：数据存储在云端，方便访问，但需要关注隐私和数据安全。考虑到数据安全，我还是有些忌惮。</li></ul></li></ul><h3 id="Obsidian"><a href="#Obsidian" class="headerlink" title="Obsidian"></a>Obsidian</h3><p><strong>地表最强个人知识管理工具</strong></p><ul><li>优点<ul><li><strong>双链</strong>：最吸引我的就是其笔记中的双链功能，当然使用双链是现代笔记的一个趋势并非obsidian特有，但是其把双链的位置摆在了较高的优先级，围绕其开发了许多有特点的功能，像是graph view，反向链接</li><li><strong>插件系统</strong>：Obsidian 拥有丰富的插件生态，官方和社区开发的插件极大扩展了其功能。用户可以根据需求选择不同插件，几乎可以无限制地自定义 Obsidian 的功能。通过插件按需安装的特点就可以让ob变成你喜欢的样子，完美贴合你的需求。可以通过插件实现思维导图，md转word······</li><li><strong>主题和样式自定义</strong>：Obsidian 支持用户使用 CSS 自定义界面样式，此外也有丰富的社区主题供用户选择，帮助打造个性化的笔记体验。</li><li><strong>跨设备同步</strong>：Obsidian 默认将笔记存储在本地，但它支持通过多种方式实现跨设备同步，我就通过使用Remotely插件白嫖坚果云，实现云同步。此外obsidian适配安卓、ios、windows、mac，通过这办法就可以在每个终端上记录并同步笔记，发挥移动端和桌面端不同使用场景的优势。我认为，移动端码长篇文章过去痛苦，但是却可以满足随记的需求，将瞬时的思想抓住。</li></ul></li><li>缺点<ul><li><strong>没有在线协作</strong>：Obsidian 的设计主要面向个人使用，缺乏实时在线协作的功能。如果需要多人同时编辑文档，Notion 等其他工具可能更合适。</li><li><strong>界面简约但不够直观</strong>：虽然 Obsidian 的界面简洁，但对于一些用户来说，可能会感到缺乏视觉上的吸引力。此外，部分功能的访问方式（如命令面板）可能不够直观。和notion比较起来还是能感受都审美上的差距。</li></ul></li></ul><p>notion和obsidian就像在两个不同的方向生长，notion是向内生长，通过自身的架构，带来功能的丰富性；而obsidian则是向外生长，靠插件来拓张功能，来满足不同需求。</p><h1 id="个人使用体验"><a href="#个人使用体验" class="headerlink" title="个人使用体验"></a>个人使用体验</h1><p>我现在基本上将所有要码字的笔记都转移到了ob上去了，包括撰写个人博客，记录平时网络上看到的优秀观点、灵感一现的想法等等。</p><h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>此外不得不提到是关于前言的callback，最近在github上发现了基于RSS开发的<strong>Follow</strong>，试图将所有<strong>信息源all in one</strong>，同时follow支持obsidian保存。无敌了😍，这真的无敌了😍，我暑假设想的信息流齐全了，同时是满足了信息的收集、呈现、记录和输出。Follow我也会持续关注其发展，有机会的也可以写下分享。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 科技分享 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Tailwind CSS初体验</title>
       <link href="/tangBlog/2024/10/10/Tailwind-CSS%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
       <url>/tangBlog/2024/10/10/Tailwind-CSS%E5%88%9D%E4%BD%93%E9%AA%8C/</url>
