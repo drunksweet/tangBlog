@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git通讲-第二章（1）：快照和不可变对象模型 | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#6A5ACD"><meta name="description" content="前言上一篇文章主要介绍些Git起源背后的一些故事背景，从这篇开始将逐渐讲解Git的设计理念，包括分布式控制、快照管理、不可变对象模型和分支模型。其实上述概念都不是孤立的，在讲解中会发现它们是相辅相成的有机整体，实现1+1大于2的效果。接下来预计会按照快照模型与不可变对象模型、分支模型、分布式控制这样的顺序讲解，其用意到后面自会明了。本人总是从中能看到区块链的影子，之后会引入区块链的相关知识进行补充">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git通讲-第二章（1）：快照和不可变对象模型">
+<meta property="og:url" content="https://drunksweet.github.io/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="前言上一篇文章主要介绍些Git起源背后的一些故事背景，从这篇开始将逐渐讲解Git的设计理念，包括分布式控制、快照管理、不可变对象模型和分支模型。其实上述概念都不是孤立的，在讲解中会发现它们是相辅相成的有机整体，实现1+1大于2的效果。接下来预计会按照快照模型与不可变对象模型、分支模型、分布式控制这样的顺序讲解，其用意到后面自会明了。本人总是从中能看到区块链的影子，之后会引入区块链的相关知识进行补充">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://drunksweet.github.io/img/avatar.png">
+<meta property="article:published_time" content="2024-11-02T17:30:09.000Z">
+<meta property="article:modified_time" content="2024-11-02T17:36:26.987Z">
+<meta property="article:author" content="Drunksweet">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://drunksweet.github.io/img/avatar.png"><link rel="shortcut icon" href="/tangBlog/img/icon.png"><link rel="canonical" href="https://drunksweet.github.io/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/tangBlog/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/tangBlog/',
+  algolia: undefined,
+  localSearch: {"path":"/tangBlog/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Drunksweet","link":"链接: ","source":"来源: 焦糖酒的妙妙屋","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git通讲-第二章（1）：快照和不可变对象模型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-03 01:36:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#5846c7')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#6A5ACD')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/tangBlog/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><nav id="nav"><span id="blog-info"><a href="/tangBlog/" title="焦糖酒的妙妙屋"><img class="site-icon" src="/tangBlog/img/icon.png"/><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git通讲-第二章（1）：快照和不可变对象模型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-02T17:30:09.000Z" title="发表于 2024-11-03 01:30:09">2024-11-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-02T17:36:26.987Z" title="更新于 2024-11-03 01:36:26">2024-11-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Git通讲-第二章（1）：快照和不可变对象模型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇文章主要介绍些Git起源背后的一些故事背景，从这篇开始将逐渐讲解Git的设计理念，包括分布式控制、快照管理、不可变对象模型和分支模型。其实上述概念都不是孤立的，在讲解中会发现它们是相辅相成的有机整体，实现1+1大于2的效果。<br>接下来预计会按照<strong>快照模型与不可变对象模型</strong>、<strong>分支模型</strong>、<strong>分布式控制</strong>这样的顺序讲解，其用意到后面自会明了。<br>本人总是从中能看到区块链的影子，之后会引入区块链的相关知识进行补充，也当是拓展了🫠。</p>
+<h2 id="快照存储模型"><a href="#快照存储模型" class="headerlink" title="快照存储模型"></a>快照存储模型</h2><p>快照模型与传统的版本控制系统（如SVN等）不同。传统系统通常基于文件的差异（diff）来管理版本，而Git则使用快照（snapshot）的方式来记录项目的每个版本。</p>
+<h3 id="快照模型的主要特点："><a href="#快照模型的主要特点：" class="headerlink" title="快照模型的主要特点："></a>快照模型的主要特点：</h3><ol>
+<li><strong>快照而非差异</strong>：<ul>
+<li>Git会在每次提交时保存项目的当前状态，称为“快照”。这意味着每次提交都是整个项目的完整状态，而不是仅保存变化部分。</li>
+</ul>
+</li>
+<li><strong>只保存变更</strong>：<ul>
+<li>虽然每个提交实际上是一个完整的快照，但Git为了节省空间，内部实现上只存储更改过的文件的内容，而未改变的文件只保存一次。这使得Git非常高效。</li>
+</ul>
+</li>
+<li><strong>对象存储</strong>：<ul>
+<li>Git将文件和目录的快照存储为对象，每个对象都有一个唯一的SHA-1哈希值。这种方式不仅提供了数据的完整性，还能有效管理版本。</li>
+</ul>
+</li>
+<li><strong>树（Tree）和Blob</strong>：<ul>
+<li>在Git中，目录结构被称为“树”（tree），每个文件被称为“Blob”（binary large object）。每次提交都会创建一个新的树对象，指向当前提交的文件状态。</li>
+</ul>
+</li>
+<li><strong>提交（Commit）对象</strong>：<ul>
+<li>每次提交不仅包含快照，还包含提交信息、作者信息、时间戳和指向父提交的指针。这使得Git可以轻松地追踪历史和分支。</li>
+</ul>
+</li>
+<li><strong>高效的分支管理</strong>：<ul>
+<li>因为每个提交都是一个独立的快照，创建分支实际上只需要创建一个新的指针，指向当前的提交。这使得分支操作非常轻量级，极大地方便了开发过程中的实验和合并。</li>
+</ul>
+</li>
+</ol>
+<h2 id="不可变对象模型"><a href="#不可变对象模型" class="headerlink" title="不可变对象模型"></a>不可变对象模型</h2><p>其实这就是上述在快照模型中提到Git对象数据库的具体展开，主要就是三大对象类型结合SHA-1来保证数据的不可变性。</p>
+<blockquote>
+<p>Git的内部数据结构依赖于 **[[加密哈希函数|SHA-1]]**，为每个对象（如文件和提交）生成唯一标识。这种设计确保了数据的不可变性：</p>
+<ul>
+<li><strong>数据完整性</strong>：每个对象的内容会被哈希处理，任何对内容的修改都会导致哈希值的变化，从而提示开发者数据已被更改。</li>
+<li><strong>一致性</strong>：由于对象的内容与其哈希值紧密关联，Git能够保证版本库的一致性，防止数据丢失或损坏。这种机制使得任何用户都可以安全地信任本地的Git仓库。</li>
+</ul>
+</blockquote>
+<p>Git中的哈希值通过对对象内容和元数据进行特定格式的组合，然后应用SHA-1哈希函数生成。这个过程确保了每个对象都有唯一的标识符，同时也保证了数据的完整性和安全性。我们先来看下它们的具体的步骤和原理：</p>
+<h3 id="三大对象"><a href="#三大对象" class="headerlink" title="三大对象"></a>三大对象</h3><h4 id="1-对象类型"><a href="#1-对象类型" class="headerlink" title="1. 对象类型"></a>1. 对象类型</h4><p>Git中的对象主要有三种类型：</p>
+<ul>
+<li><strong>Blob</strong>：表示文件内容。</li>
+<li><strong>Tree</strong>：表示目录，可以包含指向其他blob或tree对象的指针。</li>
+<li><strong>Commit</strong>：表示一次提交，包含指向tree对象的指针、作者信息、提交信息等。</li>
+</ul>
+<h5 id="提交对象（commit）"><a href="#提交对象（commit）" class="headerlink" title="提交对象（commit）"></a><strong>提交对象（commit）</strong></h5><p>提交对象是每次提交时生成的一个对象，记录了：</p>
+<ul>
+<li><strong>提交元数据</strong>：如提交信息、作者、时间戳等。</li>
+<li><strong>父提交</strong>：上一个提交的引用（一个提交可以有多个父提交，用于表示合并）。</li>
+<li><strong>树对象的引用</strong>：提交对象会指向一个根树对象，代表当时项目的整体文件系统快照。<br>提交对象是 Git 的历史记录，通过它可以追踪项目的每个版本、作者、提交时间等信息。</li>
+</ul>
+<h5 id="树对象（tree）"><a href="#树对象（tree）" class="headerlink" title="树对象（tree）"></a><strong>树对象（tree）</strong></h5><p>树对象表示文件系统的目录结构。它：</p>
+<ul>
+<li><strong>包含多个引用</strong>：每个引用要么指向一个文件对象（blob），要么指向另一个子目录的树对象。</li>
+<li><strong>记录文件名和路径</strong>：树对象会保存项目中所有文件和子目录的结构信息，包括文件的名字、类型（文件或目录），以及它们在仓库中的位置。<br>树对象可以嵌套，类似文件系统中的目录结构，一个树对象可以包含其他树对象（子目录），也可以包含文件对象（表示具体的文件内容）。</li>
+</ul>
+<h5 id="文件对象（Blob）"><a href="#文件对象（Blob）" class="headerlink" title="文件对象（Blob）"></a><strong>文件对象（Blob）</strong></h5><p>Blob（Binary Large Object）对象保存了实际的文件内容，Blob 对象本身不包含文件名或路径等元数据。它：</p>
+<ul>
+<li><strong>存储文件内容</strong>：无论是文本文件还是二进制文件，Blob 对象只存储文件的内容本身。</li>
+<li><strong>与文件名、路径无关</strong>：文件名和路径信息都在树对象中管理，因此相同内容的文件在不同的目录或提交中，只需要存储一份 Blob 对象。</li>
+</ul>
+<h5 id="关系总结：如何构成一个提交"><a href="#关系总结：如何构成一个提交" class="headerlink" title="关系总结：如何构成一个提交"></a><strong>关系总结：如何构成一个提交</strong></h5><ul>
+<li><strong>提交对象（commit）</strong> 是顶层对象，指向一个 <strong>树对象（tree）</strong>，代表当时项目的目录结构。</li>
+<li><strong>树对象（tree）</strong> 维护着目录和文件的结构，并通过引用指向文件对象或子目录（另一个树对象）。</li>
+<li><strong>文件对象（Blob）</strong> 存储文件的实际内容，树对象通过引用连接到 Blob 对象。<br>因此，Git 通过提交对象、树对象和Blob对象的层层指向，构成了完整的项目快照。例如，每次提交时：</li>
+</ul>
+<ol>
+<li>Git 会生成一个 <strong>提交对象</strong>，指向项目当前的根 <strong>树对象</strong>。</li>
+<li><strong>树对象</strong> 代表整个项目的目录结构，并指向多个文件对象（Blob）或子目录的树对象。</li>
+<li><strong>Blob 对象</strong> 保存文件内容。<br>这三者相互关联，形成了完整的项目历史和快照。</li>
+</ol>
+<h3 id="图示：对象关系"><a href="#图示：对象关系" class="headerlink" title="图示：对象关系"></a><strong>图示：对象关系</strong></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">提交对象（<span class="keyword">commit</span>）</span><br><span class="line">    <span class="operator">|</span></span><br><span class="line">    └── 树对象（tree）</span><br><span class="line">           ├── <span class="type">Blob</span> 对象（文件<span class="number">1</span>内容）</span><br><span class="line">           ├── <span class="type">Blob</span> 对象（文件<span class="number">2</span>内容）</span><br><span class="line">           └── 子树对象（子目录）</span><br><span class="line">                   ├── <span class="type">Blob</span> 对象（子目录中的文件<span class="number">1</span>内容）</span><br><span class="line">                   └── <span class="type">Blob</span> 对象（子目录中的文件<span class="number">2</span>内容）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过这种分层结构，Git 能够快速检索项目的历史版本，并且因为Blob对象可以被多个树对象引用，所以相同的文件内容在不同的提交中只需要存储一次，大大提高了存储效率。<br>可以通过 <code>git cat-file -p</code> 命令查看这些对象的关系和详细内容，比如查看提交、树对象和Blob对象的内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git cat-file -p &lt;commit-hash&gt;</span><br><span class="line">git cat-file -p &lt;tree-hash&gt;</span><br><span class="line">git cat-file -p &lt;blob-hash&gt;</span><br></pre></td></tr></table></figure>
+<p>可以通过 <code>git cat-file -t</code> 命令查看这些对象的实际类型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git cat-file -t &lt;commit-hash&gt;</span><br><span class="line">git cat-file -t &lt;tree-hash&gt;</span><br><span class="line">git cat-file -t &lt;blob-hash&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-计算哈希值的步骤"><a href="#2-计算哈希值的步骤" class="headerlink" title="2. 计算哈希值的步骤"></a>2. 计算哈希值的步骤</h4><p>在让我们对于每种对象，Git都是如何生成一个唯一的哈希值。计算哈希值的步骤如下：</p>
+<h5 id="Blob（文件内容）"><a href="#Blob（文件内容）" class="headerlink" title="Blob（文件内容）"></a>Blob（文件内容）</h5><ol>
+<li><strong>准备数据</strong>：首先，Git会将文件内容与其类型信息和长度信息组合在一起，形成一个字符串。格式如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blob &lt;size&gt;\0&lt;content&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;size&gt;</code>是文件的字节数。</li>
+<li><code>\0</code>是一个空字符，用于分隔大小和内容。</li>
+<li><code>&lt;content&gt;</code>是文件的实际内容。</li>
+</ul>
+</li>
+<li><strong>计算哈希</strong>：将上述字符串传递给SHA-1哈希函数，生成一个40字符的十六进制哈希值。</li>
+</ol>
+<h5 id="Tree（目录）"><a href="#Tree（目录）" class="headerlink" title="Tree（目录）"></a>Tree（目录）</h5><ol>
+<li><strong>准备数据</strong>：一个tree对象由多个条目组成，每个条目包含文件模式、文件名和指向blob或子tree对象的SHA-1哈希值。格式如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree &lt;size&gt;\0&lt;entries&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;size&gt;</code>是tree中条目的数量。</li>
+<li><code>&lt;entries&gt;</code>是所有条目的组合，每个条目都是类似于<code>&lt;mode&gt; &lt;filename&gt;\0&lt;sha1&gt;</code>的格式。</li>
+</ul>
+</li>
+<li><strong>计算哈希</strong>：同样，将字符串传递给SHA-1哈希函数。</li>
+</ol>
+<h5 id="Commit（提交）"><a href="#Commit（提交）" class="headerlink" title="Commit（提交）"></a>Commit（提交）</h5><ol>
+<li><strong>准备数据</strong>：一个commit对象包含指向tree对象的指针、作者信息、提交时间和提交信息。格式如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">commit &lt;size&gt;\0&lt;tree&gt;\n&lt;parent&gt;\n&lt;author&gt;\n&lt;committer&gt;\n&lt;timestamp&gt;\n&lt;message&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;size&gt;</code>是commit对象的字节数。</li>
+<li><code>&lt;tree&gt;</code>是指向tree对象的SHA-1。</li>
+<li><code>&lt;parent&gt;</code>（如果存在）指向父提交的SHA-1。</li>
+<li><code>&lt;author&gt;</code>和<code>&lt;committer&gt;</code>包含提交者的信息。</li>
+<li><code>&lt;timestamp&gt;</code>是提交时间。</li>
+<li><code>&lt;message&gt;</code>是提交信息。</li>
+</ul>
+</li>
+<li><strong>计算哈希</strong>：将上述字符串传递给SHA-1哈希函数，生成该提交对象的哈希值。</li>
+</ol>
+<h4 id="3-哈希值的存储"><a href="#3-哈希值的存储" class="headerlink" title="3. 哈希值的存储"></a>3. 哈希值的存储</h4><p>Git会将计算出来的哈希值作为对象的唯一标识符，存储在<code>.git/objects</code>目录中。每个对象的内容及其哈希值被保存在文件系统中，以便后续快速检索和验证。</p>
+<h3 id="SHA-1算法"><a href="#SHA-1算法" class="headerlink" title="SHA-1算法"></a>SHA-1算法</h3><p>看了这么多一定对SHA到底什么感到困惑吧，其实没什么高深的，Git就是根据相应对象的具体内容（本质是二进制）算出一个 40 字符的 16 进制字符串，这个字符串就被称为 “散列值” 或 “哈希值”。<br>Git 使用 SHA-1（Secure Hash Algorithm 1）作为其核心机制来唯一标识每个提交、文件对象和目录树。<br>哈希值具有以下特性：</p>
+<ul>
+<li><strong>不可逆性</strong>：从哈希值无法反推原始数据。</li>
+<li><strong>抗碰撞性</strong>：很难找到两个不同的输入产生相同的哈希值。</li>
+<li><strong>小改动大变化</strong>：输入数据的微小变化会导致哈希值的巨大变化。<br>Git利用这个特性实现如下它的几个关键作用：</li>
+</ul>
+<ol>
+<li><p><strong>唯一标识对象</strong>：Git 中的每个文件、每次提交、以及每个目录树的状态都会生成一个 SHA-1 哈希值。Git 通过这个哈希值来区分每个提交，确保同样的文件内容和文件结构不会生成重复的 ID。</p>
+</li>
+<li><p><strong>内容完整性校验</strong>：SHA-1 的<strong>不可逆特性</strong>使得它非常适合<strong>检测文件是否被篡改</strong>。Git 在传输和存储文件时使用 SHA-1 来校验数据的完整性，如果一个文件的内容被改动，它的哈希值也会发生变化，这样可以有效防止数据损坏。</p>
+</li>
+<li><p><strong>分布式优势</strong>：SHA-1 哈希值在 Git 中有一个不可忽视的好处：因为哈希值是根据内容生成的，<strong>不同的开发者对同样的内容会产生相同的哈希值</strong>，这使得 Git 的分布式模型更加高效。</p>
+</li>
+<li><p><strong>不可逆性和冲突</strong>：虽然 SHA-1 理论上会有哈希冲突的可能，但在实际开发中，这种冲突几乎不可能影响到项目的正常运作。SHA-1 的设计保证了它的安全性和性能。</p>
+</li>
+</ol>
+<p>我之前了解过一些区块链的知识，就感觉似曾相识。Git是使用SHA-1而区块链使用的SHA-256，但SHA-256和SHA-1都是加密哈希函数，可以简单的理解为SHA-1是简单版而SHA-256是plus版。因为比特币算是金融领域，需要更高的安全性，区块链算是把hash玩出了花，相较Git有更复杂的数据结构和运算方法。</p>
+<blockquote>
+<p>Git诞生于2005年，是由Linus Torvalds开发的一种分布式版本控制系统，设计之初主要是为了解决Linux内核开发的版本管理需求。它的核心理念是去中心化的分布式存储：每个人可以有一个完整的项目历史副本，且各副本通过哈希值（SHA-1）确保每次变更的唯一性和完整性。<br>区块链则是在2008年中本聪提出的比特币白皮书中被首次介绍的技术，它建立在许多类似Git的去中心化和不可篡改的核心理念上。</p>
+</blockquote>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这篇文章大致讲解了git中的两个主要模型<strong>快照存储模型</strong>和<strong>不可变对象模型</strong>，略微引出了下哈希，而这两个模型理念的集中应用就是在 <code>.git/objects</code> 目录，下一篇文章会围绕其展开。<br>也是写爽了，发现Git这个坑是越挖越大，越挖越深😓😓😓，或许能出本书呢。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">https://drunksweet.github.io/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://drunksweet.github.io" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tangBlog/tags/Git/">Git</a></div><div class="post_share"><div class="social-share" data-image="/tangBlog/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/tangBlog/2024/11/02/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%B5%B7%E6%BA%90/" title="Git通讲-第一章：起源"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git通讲-第一章：起源</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/tangBlog/2024/06/14/Git%E6%9C%AC%E5%9C%B0%E4%B8%8E%E8%BF%9C%E7%A8%8B/" title="Git本地与远程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="title">Git本地与远程</div></div></a></div><div><a href="/tangBlog/2024/05/03/Git%E5%9F%BA%E7%A1%80/" title="Git基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-03</div><div class="title">Git基础</div></div></a></div><div><a href="/tangBlog/2024/11/02/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%B5%B7%E6%BA%90/" title="Git通讲-第一章：起源"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-02</div><div class="title">Git通讲-第一章：起源</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/tangBlog/img/avatar.png" onerror="this.onerror=null;this.src='/tangBlog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description">前行有光，是赶路人</div></div><div class="card-info-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7%E5%AD%98%E5%82%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">快照存储模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">快照模型的主要特点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">不可变对象模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%A4%A7%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.1.</span> <span class="toc-text">三大对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.1.</span> <span class="toc-text">1. 对象类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E5%AF%B9%E8%B1%A1%EF%BC%88commit%EF%BC%89"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">提交对象（commit）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%91%E5%AF%B9%E8%B1%A1%EF%BC%88tree%EF%BC%89"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">树对象（tree）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%EF%BC%88Blob%EF%BC%89"><span class="toc-number">3.1.1.3.</span> <span class="toc-text">文件对象（Blob）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%80%BB%E7%BB%93%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9E%84%E6%88%90%E4%B8%80%E4%B8%AA%E6%8F%90%E4%BA%A4"><span class="toc-number">3.1.1.4.</span> <span class="toc-text">关系总结：如何构成一个提交</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%A4%BA%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB"><span class="toc-number">3.2.</span> <span class="toc-text">图示：对象关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E5%93%88%E5%B8%8C%E5%80%BC%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.2.1.</span> <span class="toc-text">2. 计算哈希值的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Blob%EF%BC%88%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%EF%BC%89"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">Blob（文件内容）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Tree%EF%BC%88%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">Tree（目录）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Commit%EF%BC%88%E6%8F%90%E4%BA%A4%EF%BC%89"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">Commit（提交）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%93%88%E5%B8%8C%E5%80%BC%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-number">3.2.2.</span> <span class="toc-text">3. 哈希值的存储</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SHA-1%E7%AE%97%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">SHA-1算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">4.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（1）：快照和不可变对象模型">Git通讲-第二章（1）：快照和不可变对象模型</a><time datetime="2024-11-02T17:30:09.000Z" title="发表于 2024-11-03 01:30:09">2024-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/02/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%B5%B7%E6%BA%90/" title="Git通讲-第一章：起源">Git通讲-第一章：起源</a><time datetime="2024-11-01T17:03:02.000Z" title="发表于 2024-11-02 01:03:02">2024-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/10/24/%E6%88%90%E4%B8%BAGit%E9%AB%98%E6%89%8B-%E8%AF%BB%E6%BA%90%E7%A0%81/" title="成为Git高手--读源码">成为Git高手--读源码</a><time datetime="2024-10-24T14:14:43.000Z" title="发表于 2024-10-24 22:14:43">2024-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/10/24/Obsidian%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E4%BD%93%E9%AA%8C%E5%88%86%E4%BA%AB/" title="Obsidian个人知识管理工具体验分享">Obsidian个人知识管理工具体验分享</a><time datetime="2024-10-24T08:33:45.000Z" title="发表于 2024-10-24 16:33:45">2024-10-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/10/10/Tailwind-CSS%E5%88%9D%E4%BD%93%E9%AA%8C/" title="Tailwind CSS初体验">Tailwind CSS初体验</a><time datetime="2024-10-10T15:13:56.000Z" title="发表于 2024-10-10 23:13:56">2024-10-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Drunksweet</div><div class="footer_custom_text">前行有光，是赶路人</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/tangBlog/js/utils.js?v=4.13.0"></script><script src="/tangBlog/js/main.js?v=4.13.0"></script><script src="/tangBlog/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/tangBlog/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
