@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git通讲-第二章（4）：分布式版本控制 | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#6A5ACD"><meta name="description" content="前言也是到第二章的第四篇了，这篇我希望能结合前面讲到的快照模型、不可变数据对象、分支模型的知识，来探讨Git是如何实现分布式这件事情的，或许会捎带嘴的提一下Github之类远程托管仓库平台的兴起。 Git分布式版本控制的实现Git的分布式版本控制系统与传统的集中式版本控制（如SVN）相比，有几个关键的不同点。Git的架构使得每个开发者的本地仓库不仅仅是一个工作副本，而是一个完整的仓库，包含了项目的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git通讲-第二章（4）：分布式版本控制">
+<meta property="og:url" content="https://drunksweet.github.io/2024/11/09/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="前言也是到第二章的第四篇了，这篇我希望能结合前面讲到的快照模型、不可变数据对象、分支模型的知识，来探讨Git是如何实现分布式这件事情的，或许会捎带嘴的提一下Github之类远程托管仓库平台的兴起。 Git分布式版本控制的实现Git的分布式版本控制系统与传统的集中式版本控制（如SVN）相比，有几个关键的不同点。Git的架构使得每个开发者的本地仓库不仅仅是一个工作副本，而是一个完整的仓库，包含了项目的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://drunksweet.github.io/img/avatar.png">
+<meta property="article:published_time" content="2024-11-08T16:20:37.000Z">
+<meta property="article:modified_time" content="2024-11-08T16:21:04.478Z">
+<meta property="article:author" content="Drunksweet">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://drunksweet.github.io/img/avatar.png"><link rel="shortcut icon" href="/tangBlog/img/icon.png"><link rel="canonical" href="https://drunksweet.github.io/2024/11/09/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/tangBlog/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/tangBlog/',
+  algolia: undefined,
+  localSearch: {"path":"/tangBlog/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Drunksweet","link":"链接: ","source":"来源: 焦糖酒的妙妙屋","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git通讲-第二章（4）：分布式版本控制',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-09 00:21:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#5846c7')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#6A5ACD')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/tangBlog/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><nav id="nav"><span id="blog-info"><a href="/tangBlog/" title="焦糖酒的妙妙屋"><img class="site-icon" src="/tangBlog/img/icon.png"/><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git通讲-第二章（4）：分布式版本控制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-08T16:20:37.000Z" title="发表于 2024-11-09 00:20:37">2024-11-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-08T16:21:04.478Z" title="更新于 2024-11-09 00:21:04">2024-11-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Git通讲-第二章（4）：分布式版本控制"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>也是到第二章的第四篇了，这篇我希望能结合前面讲到的快照模型、不可变数据对象、分支模型的知识，来探讨Git是如何实现<strong>分布式</strong>这件事情的，或许会捎带嘴的提一下Github之类远程托管仓库平台的兴起。</p>
+<h2 id="Git分布式版本控制的实现"><a href="#Git分布式版本控制的实现" class="headerlink" title="Git分布式版本控制的实现"></a>Git分布式版本控制的实现</h2><p>Git的分布式版本控制系统与传统的集中式版本控制（如SVN）相比，有几个关键的不同点。Git的架构使得每个开发者的本地仓库不仅仅是一个工作副本，而是一个完整的仓库，包含了项目的所有历史记录。这种设计带来了灵活的协作模式和极大的独立性。以下是Git分布式版本控制的一些关键点：</p>
+<h3 id="1-本地完整仓库"><a href="#1-本地完整仓库" class="headerlink" title="1. 本地完整仓库"></a>1. <strong>本地完整仓库</strong></h3><ul>
+<li><strong>完整性</strong>：在Git中，每个开发者的本地仓库都是项目完整的历史副本，包括所有的提交记录、分支、标签等。这意味着，开发者在本地可以进行几乎所有的操作，比如查看历史、创建分支、提交代码等，而不需要连接到远程服务器。</li>
+<li><strong>独立性</strong>：开发者不需要依赖中央服务器，甚至在没有网络连接的情况下也可以正常工作。这种离线工作的能力在许多场景下非常有用，尤其是在网络不稳定的环境中。</li>
+<li><strong>优势</strong>：即使没有网络连接，开发者也可以进行提交、分支创建、查看历史等操作，而不依赖于中央服务器。</li>
+</ul>
+<h3 id="2-数据完整性和安全性"><a href="#2-数据完整性和安全性" class="headerlink" title="2. 数据完整性和安全性"></a>2. <strong>数据完整性和安全性</strong></h3><ul>
+<li><strong>不可变的快照</strong>：每次提交在Git中都是一个快照（snapshot），它通过哈希值标识唯一存在于历史中，不可更改。这意味着任何数据的改变都会创建一个新的快照，而历史记录始终保持不变。</li>
+<li><strong>SHA-1校验</strong>：Git使用SHA-1生成唯一的对象ID（哈希），确保每个版本快照都不可篡改。这些标识在传输和存储时可以保证数据的完整性，即便是在分布式环境中，不同开发者的对象哈希一致，也表明数据内容相同。</li>
+<li><strong>数据安全性</strong>：哈希校验机制确保了即使分布式地存储和传输数据，代码内容仍然能保持安全、一致。</li>
+</ul>
+<h3 id="3-分布式数据存储"><a href="#3-分布式数据存储" class="headerlink" title="3. 分布式数据存储"></a>3. <strong>分布式数据存储</strong></h3><ul>
+<li><strong>数据模型</strong>：Git的每个仓库都包含<strong>完整的项目快照</strong>，通过不可变的哈希标识和压缩存储对象（blob、tree、commit等），Git确保每个对象都是唯一的、完整的。</li>
+<li><strong>数据同步</strong>：当开发者需要与他人共享代码时，可以将本地仓库推送（push）到远程仓库或从其他仓库拉取（pull）更新。这些操作不会修改历史记录，而是将新的数据添加到已有的记录中。</li>
+</ul>
+<h3 id="4-去中心化的协作方式（分布式协作）"><a href="#4-去中心化的协作方式（分布式协作）" class="headerlink" title="4. 去中心化的协作方式（分布式协作）"></a>4. <strong>去中心化的协作方式（分布式协作）</strong></h3><ul>
+<li><strong>与集中式的区别</strong>：集中式版本控制系统通常依赖一个中央服务器，所有代码提交和历史记录都存储在该服务器上，开发者只能从服务器上获取最新代码并提交更改。而在Git中，团队可以使用多个远程仓库，不必有一个单一的中央服务器。</li>
+<li><strong>多仓库协作</strong>：开发者可以自由选择要与之同步的远程仓库（比如主仓库、个人的备份仓库，甚至其他开发者的仓库）。通过<code>git remote add</code>命令，Git允许开发者添加多个远程仓库，方便进行多方同步。这种灵活性让开发者能够在不同的仓库间推送或拉取更改，适应各种团队协作模式。<br>这一特点的实践我在以前的博文中有详细的讲解过👉<a href="https://drunksweet.github.io/tangBlog/2024/06/14/Git%E6%9C%AC%E5%9C%B0%E4%B8%8E%E8%BF%9C%E7%A8%8B/">Git本地与远程 | 焦糖酒的妙妙屋</a>实际上就是创建本地分支与远程仓库建立联系后变成远程分支，然后进行push、pull等操作。</li>
+</ul>
+<h3 id="5-离线提交和版本管理"><a href="#5-离线提交和版本管理" class="headerlink" title="5. 离线提交和版本管理"></a>5. <strong>离线提交和版本管理</strong></h3><ul>
+<li><strong>离线操作</strong>：由于每个本地仓库都是完整的代码库，开发者可以离线进行提交、创建分支、查看历史等操作，这样大大降低了对网络的依赖，尤其是在网络不稳定的环境下。开发者可以在本地进行频繁的提交，形成多个小版本，记录开发过程，等到合适的时候再将这些更改推送到远程仓库。</li>
+<li><strong>提高效率</strong>：这种本地提交和历史保存的能力极大提高了开发效率，开发者在不确定何时需要同步的情况下，也可以随时保留所有的变更历史。</li>
+<li><strong>轻松切换工作流</strong>：由于Git的分布式特性，开发者可以在本地实现完整的开发流程，而不需要频繁与中央仓库通信。<br>第一点的离线操作也就是使用本地仓库进行版本控制，Git实际上是有划分三个分区（工作区、暂存区、本地仓库）也可以看我之前写的文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_80272161/article/details/138258325">Git基础-CSDN博客</a>头几次写文章比较文字还稚嫩🫡。</li>
+</ul>
+<h3 id="6-分支模型支持并行开发"><a href="#6-分支模型支持并行开发" class="headerlink" title="6. 分支模型支持并行开发"></a>6. <strong>分支模型支持并行开发</strong></h3><ul>
+<li><strong>轻量分支</strong>：Git的分支创建和切换非常轻量，分支仅仅是一个指向特定提交的指针。这种设计让开发者能够快速创建、切换分支，进行不同功能的并行开发。</li>
+<li><strong>非线性开发</strong>：Git支持同时进行多个分支的开发，开发者可以在本地新建分支，完成测试和开发，随后与其他人的代码整合。这种分布式结构使得分支开发变得非常高效，开发者可以在本地完成新功能的开发和测试，不影响其他开发者的进度。</li>
+</ul>
+<h3 id="7-强大的同步机制"><a href="#7-强大的同步机制" class="headerlink" title="7. 强大的同步机制"></a>7. <strong>强大的同步机制</strong></h3><ul>
+<li><strong>Push和Pull操作</strong>：在分布式系统中，Git提供了灵活的同步操作，开发者可以通过<code>git push</code>将本地更改推送到远程仓库，或使用<code>git pull</code>从远程仓库拉取其他人的更改。</li>
+<li><strong>Fetch</strong>：Git还提供了<code>git fetch</code>命令，可以获取远程仓库的更改而不立即合并，让开发者有机会在本地查看并决定如何合并代码。这样的灵活性大大减少了合并冲突的可能性，也增加了协作的稳定性。</li>
+<li><strong>Merge</strong>：<code>git merge</code>合并操作能够将分支的并行开发成果整合到一起，自动检测和合并更改，并在冲突出现时提供解决方法。</li>
+</ul>
+<h3 id="8-补丁分享与变基（Rebase）"><a href="#8-补丁分享与变基（Rebase）" class="headerlink" title="8. 补丁分享与变基（Rebase）"></a>8. <strong>补丁分享与变基（Rebase）</strong></h3><ul>
+<li><strong>补丁分享</strong>：Git支持将代码的更改生成补丁文件，通过<code>git format-patch</code>生成的补丁文件可以通过各种方式分享给其他开发者。开发者可以应用补丁进行合并，实现分布式协作。</li>
+<li><strong>变基（Rebase）</strong>：Git的<code>rebase</code>功能允许开发者将分支的基准更改到其他分支之上，清理历史记录，使之看起来像是线性的。变基在多个开发者并行开发时非常有用，可以让提交历史更加简洁、易读。</li>
+</ul>
+<h3 id="9-多方协作与贡献"><a href="#9-多方协作与贡献" class="headerlink" title="9. 多方协作与贡献"></a>9. <strong>多方协作与贡献</strong></h3><ul>
+<li><strong>去中心化的协作模型</strong>：Git的设计不要求有一个“主仓库”或“中央服务器”，开发者可以通过多仓库之间的相互拉取和推送进行协作。开源项目中尤其会采用这种方式，多个开发者可以通过拉取彼此的代码、推送到公共仓库等方式来进行协作。</li>
+<li><strong>代码审查与拉取请求</strong>：在没有GitHub的情况下，开发者可以通过Git的分支和变基操作，手动完成代码审查流程。代码可以通过补丁文件或其他分支共享方式进行讨论和审查。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Git的分布式版本控制赋予开发者本地完整的仓库，使他们在离线环境中也能高效工作，降低了对中央服务器的依赖。同时，Git的轻量分支、变基、补丁共享等特性帮助开发者高效处理并行开发和代码整合。SHA-1哈希值和不可变快照的设计保证了数据的安全性和一致性。这种去中心化的模式不仅适合团队内部的协作开发，也非常适合开源项目的贡献和分布式的代码管理。</p>
+<h2 id="远程协作"><a href="#远程协作" class="headerlink" title="远程协作"></a>远程协作</h2><p>GitHub 是一个基于 Git 的代码托管和协作平台，允许开发者将代码存储在云端并与他人合作开发。在具体介绍GitHub之前，让我们先看看在它诞生之前，Git是通过什么样的方式实现远程协助的👇<br>Git主要通过“裸仓库”（bare repository）和分布式的<strong>服务器存储</strong>方式来实现远程协作。虽然那时候没有像GitHub这样的集中式平台，但团队仍然可以通过手动设置和使用远程仓库实现分布式协作。以下是Git在GitHub出现前常用的协作方式：</p>
+<h3 id="1-裸仓库（Bare-Repository）"><a href="#1-裸仓库（Bare-Repository）" class="headerlink" title="1. 裸仓库（Bare Repository）"></a>1. <strong>裸仓库（Bare Repository）</strong></h3><ul>
+<li><strong>概念</strong>：裸仓库是一个没有工作目录的Git仓库，用于共享和协作。它仅包含版本数据（即<code>.git</code>目录中的内容），没有实际的项目文件。这种仓库的设置方式可以防止直接在其中进行开发操作，避免了冲突的发生。</li>
+<li><strong>用途</strong>：开发团队可以在共享的服务器上创建一个裸仓库，让每个开发者将它作为远程仓库进行操作（如<code>git push</code>和<code>git pull</code>），从而在裸仓库上共享代码。</li>
+<li><strong>设置过程</strong>：裸仓库可以通过以下命令创建：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init --bare</span><br></pre></td></tr></table></figure>
+然后开发者将这个仓库作为远程仓库添加到自己的本地仓库，通过它来与其他开发者共享代码。</li>
+<li><strong>协作方式</strong>：开发者各自在本地开发，通过裸仓库定期推送自己的更改，并拉取其他人推送的更改。这种协作方式虽然没有GitHub的UI方便，但同样可以完成代码同步和协作。</li>
+</ul>
+<h3 id="2-通过SSH协议进行仓库访问"><a href="#2-通过SSH协议进行仓库访问" class="headerlink" title="2. 通过SSH协议进行仓库访问"></a>2. <strong>通过SSH协议进行仓库访问</strong></h3><ul>
+<li><strong>SSH远程访问</strong>：在没有GitHub的情况下，开发者通常通过SSH连接服务器来访问和操作远程仓库。团队会在一台公共服务器（如团队内部的Linux服务器）上创建一个裸仓库，并为每个成员设置SSH访问权限。</li>
+<li><strong>协作流程</strong>：开发者通过设置远程仓库地址，将裸仓库的URL作为<code>origin</code>或其他远程名。SSH允许安全传输数据，而Git通过SSH实现了分布式代码管理。</li>
+<li><strong>示例</strong>：例如，某个团队可以在服务器的<code>/opt/repo/project.git</code>目录下创建裸仓库，开发者通过以下命令添加并推送代码：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin user@server:/opt/repo/project.git</span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-通过Email补丁交换（Email-Patch-Exchange）"><a href="#3-通过Email补丁交换（Email-Patch-Exchange）" class="headerlink" title="3. 通过Email补丁交换（Email Patch Exchange）"></a>3. <strong>通过Email补丁交换（Email Patch Exchange）</strong></h3><ul>
+<li><strong>发送补丁</strong>：Git支持通过电子邮件交换补丁。开发者可以使用<code>git format-patch</code>命令生成补丁文件，并通过电子邮件发送给其他成员。接收方可以用<code>git am</code>命令应用补丁，将更改合并到自己的分支中。</li>
+<li><strong>使用方式</strong>：这种方法在早期的开源项目中非常常见，特别适用于分布式团队。Linus Torvalds在维护Linux内核时也常用此方法来收集开发者的贡献。</li>
+<li><strong>示例</strong>：创建补丁并发送的步骤如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git format-patch -1 &lt;commit&gt;</span><br><span class="line"><span class="comment"># 然后开发者可以通过电子邮件发送补丁文件</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-挂载网络文件系统（NFS、SMB）"><a href="#4-挂载网络文件系统（NFS、SMB）" class="headerlink" title="4. 挂载网络文件系统（NFS、SMB）"></a>4. <strong>挂载网络文件系统（NFS、SMB）</strong></h3><ul>
+<li><strong>共享文件系统</strong>：在一些小型团队中，可以通过网络文件系统（如NFS或SMB）来共享仓库。团队将裸仓库放在网络共享文件夹中，开发者可以直接访问该目录并进行操作。</li>
+<li><strong>限制</strong>：这种方式适合小型团队，且对网络速度有较高要求，无法实现真正的分布式协作。尽管如此，这种方法仍然提供了一种灵活的代码共享方式。</li>
+</ul>
+<h3 id="5-分布式多仓库模型"><a href="#5-分布式多仓库模型" class="headerlink" title="5. 分布式多仓库模型"></a>5. <strong>分布式多仓库模型</strong></h3><ul>
+<li><strong>点对点协作</strong>：在没有集中式平台时，开发者可以在各自的机器上建立各自的仓库，通过互相添加对方的仓库作为远程仓库进行协作。这种方式虽然略显复杂，但适合一些特定的分布式开发团队。</li>
+<li><strong>例子</strong>：开发者A和B可以直接将对方的仓库添加为远程仓库，通过<code>git fetch</code>和<code>git push</code>来直接共享代码，而无需依赖集中式的服务器。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add developerB ssh://developerB@hostname:/path/to/repo.git</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="6-协作工作流"><a href="#6-协作工作流" class="headerlink" title="6. 协作工作流"></a>6. <strong>协作工作流</strong></h3><ul>
+<li>在没有GitHub的时代，Git的协作工作流更依赖于良好的沟通和手动操作。团队可以制定清晰的分支管理策略（例如将一个稳定分支作为主分支），并约定合并和提交的规范，以避免冲突和版本混乱。</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在GitHub诞生之前，Git通过裸仓库、SSH访问、电子邮件补丁、共享文件系统等方式，仍然能够支持分布式开发。虽然这些方法在用户体验和便捷性上不如集中式平台，但它们能够有效地实现代码分发、同步和协作，使得分布式版本控制在小型团队和开源项目中同样有效。</p>
+<h3 id="GitHub简史"><a href="#GitHub简史" class="headerlink" title="GitHub简史"></a>GitHub简史</h3><p>然后在让我们初略的了解一下github的故事。还是得讲回当初我在B站看到的北游老土的视频<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1i54y1Q7r2/?spm_id_from=333.788.recommend_more_video.0">GitHub的崛起_哔哩哔哩_bilibili</a>。<br>首先必须需要澄清的一点就是GitHub不是Git的缔造者Linus创造的（我看过有好几篇文章弄错了），GitHub成立于2008年，是由Tom Preston-Werner、Chris Wanstrath、P. J. Hyett和Scott Chacon共同创立的，他们希望通过创建一个更便捷的代码托管和协作平台，来改善开发者的工作流程。以下是GitHub的发展历程和一些关键事件：</p>
+<h3 id="1-2008-创立"><a href="#1-2008-创立" class="headerlink" title="1. 2008 - 创立"></a>1. <strong>2008 - 创立</strong></h3><ul>
+<li>GitHub在2008年正式推出。它基于由Linus Torvalds开发的分布式版本控制系统Git，提供一个图形界面来管理代码库，并且引入了社交元素（如关注、Star和Fork）以鼓励社区的互动和协作。</li>
+</ul>
+<h3 id="2-2009-快速增长与开源"><a href="#2-2009-快速增长与开源" class="headerlink" title="2. 2009 - 快速增长与开源"></a>2. <strong>2009 - 快速增长与开源</strong></h3><ul>
+<li>GitHub因其简便的协作方式而迅速受到开发者欢迎，特别是在开源社区中。开源项目和企业逐渐开始将代码托管在GitHub上，项目的“开源”成为一大亮点。2009年，GitHub用户数突破10万，平台上的开源项目数也迅速增长。</li>
+</ul>
+<h3 id="3-2011-成为开发者首选平台"><a href="#3-2011-成为开发者首选平台" class="headerlink" title="3. 2011 - 成为开发者首选平台"></a>3. <strong>2011 - 成为开发者首选平台</strong></h3><ul>
+<li>GitHub已经成为开发者最受欢迎的代码托管平台之一，吸引了大量个人开发者、开源项目和企业用户。2011年，GitHub的用户数突破百万，许多知名的开源项目，如Ruby on Rails、Node.js等，都在GitHub上托管。</li>
+</ul>
+<h3 id="4-2012-推出GitHub-Enterprise"><a href="#4-2012-推出GitHub-Enterprise" class="headerlink" title="4. 2012 - 推出GitHub Enterprise"></a>4. <strong>2012 - 推出GitHub Enterprise</strong></h3><ul>
+<li>GitHub为企业用户推出了GitHub Enterprise，这是一种适用于企业内部部署的版本，让公司能够在自己的基础设施上运行GitHub。GitHub Enterprise帮助企业在保障安全的前提下使用GitHub的功能，吸引了大量商业客户。</li>
+</ul>
+<h3 id="5-2014-开始全球扩展"><a href="#5-2014-开始全球扩展" class="headerlink" title="5. 2014 - 开始全球扩展"></a>5. <strong>2014 - 开始全球扩展</strong></h3><ul>
+<li>GitHub在全球范围内扩展，成为世界上最大的代码托管平台之一。此时，GitHub已经吸引了数百万开发者用户，并且逐步增加了如<strong>代码审查</strong>、<strong>项目管理</strong>和<strong>安全扫描</strong>等功能，以便支持更大规模和更复杂的开发团队的需求。</li>
+</ul>
+<h3 id="6-2015-2017-开发者友好功能的增多"><a href="#6-2015-2017-开发者友好功能的增多" class="headerlink" title="6. 2015 - 2017 - 开发者友好功能的增多"></a>6. <strong>2015 - 2017 - 开发者友好功能的增多</strong></h3><ul>
+<li>GitHub逐步增强了平台功能，引入了Pull Requests评论、代码评论、组织管理等新特性，并在GitHub Pages和项目文档管理方面不断完善，进一步吸引了开源项目和企业用户。</li>
+</ul>
+<h3 id="7-2018-微软收购"><a href="#7-2018-微软收购" class="headerlink" title="7. 2018 - 微软收购"></a>7. <strong>2018 - 微软收购</strong></h3><ul>
+<li>2018年6月，微软宣布以75亿美元收购GitHub。这次收购在开发者社区引起了广泛讨论，部分开发者担心GitHub会失去独立性。微软承诺保持GitHub的开放性和独立性，同时对其进行更多投资。之后，GitHub的发展更加多元化，并与微软旗下的Visual Studio等开发工具深度集成。</li>
+</ul>
+<h3 id="8-2019-GitHub-Actions的推出"><a href="#8-2019-GitHub-Actions的推出" class="headerlink" title="8. 2019 - GitHub Actions的推出"></a>8. <strong>2019 - GitHub Actions的推出</strong></h3><ul>
+<li>GitHub推出了GitHub Actions，一种CI&#x2F;CD（持续集成&#x2F;持续交付）工具，帮助开发者自动化工作流，简化构建、测试和部署过程。GitHub Actions的推出使GitHub在开发流程自动化方面更具竞争力。</li>
+</ul>
+<h3 id="9-2020-免费私有仓库与新功能"><a href="#9-2020-免费私有仓库与新功能" class="headerlink" title="9. 2020 - 免费私有仓库与新功能"></a>9. <strong>2020 - 免费私有仓库与新功能</strong></h3><ul>
+<li>GitHub宣布为所有用户提供免费的私有仓库，并且支持更多的协作功能（如Unlimited Collaborators）。此外，GitHub还推出了GitHub Codespaces，使开发者能够直接在浏览器中编写和调试代码。2020年GitHub还发布了“Copilot”，一个基于人工智能的编程助手，帮助开发者更快地编写代码。</li>
+</ul>
+<h3 id="10-2021-开源安全性的新方向"><a href="#10-2021-开源安全性的新方向" class="headerlink" title="10. 2021 - 开源安全性的新方向"></a>10. <strong>2021 - 开源安全性的新方向</strong></h3><ul>
+<li>GitHub对代码安全性和开源供应链安全性提出更高要求，加入了自动漏洞扫描、代码依赖分析等功能。同时，GitHub Sponsors进一步支持开源开发者的资助计划，以帮助开源项目获得经济支持。</li>
+</ul>
+<h3 id="11-目前的发展"><a href="#11-目前的发展" class="headerlink" title="11. 目前的发展"></a>11. <strong>目前的发展</strong></h3><ul>
+<li>GitHub不断扩展功能，包括GitHub Packages（用于发布和管理包）、GitHub Discussions（用于项目交流）、更强大的API支持等。GitHub依旧是全球最大的代码托管和协作平台之一，支持数百万开发者、企业和开源项目的需求。</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>GitHub通过不断创新和优化，不仅成为了开发者社区的核心平台，还推动了全球开源社区的发展，逐渐成为集代码托管、项目管理、安全保障和社区支持于一体的完整开发生态系统。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>呼，该篇是第二章的最后一篇文章了，本章系统详细的介绍了Git核心理念的实现机制，真是环环相扣，不得不佩服Linus等开发人员的智慧。同时也简单的拓展了一些关于区块链、GitHub的知识，主要我目前的见识也就这点🫠。<br>下一章节我会介绍一些前面文章中没讲到的漏网之鱼，既然决定开了这一系列那就尽量做到有始有终，追求知识的全面性。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io/2024/11/09/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/">https://drunksweet.github.io/2024/11/09/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://drunksweet.github.io" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tangBlog/tags/Git/">Git</a></div><div class="post_share"><div class="social-share" data-image="/tangBlog/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/tangBlog/2024/11/07/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%883%EF%BC%89%EF%BC%9A%E5%88%86%E6%94%AF%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（3）：分支模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git通讲-第二章（3）：分支模型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/tangBlog/2024/06/14/Git%E6%9C%AC%E5%9C%B0%E4%B8%8E%E8%BF%9C%E7%A8%8B/" title="Git本地与远程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="title">Git本地与远程</div></div></a></div><div><a href="/tangBlog/2024/05/03/Git%E5%9F%BA%E7%A1%80/" title="Git基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-03</div><div class="title">Git基础</div></div></a></div><div><a href="/tangBlog/2024/11/02/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%B5%B7%E6%BA%90/" title="Git通讲-第一章：起源"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-02</div><div class="title">Git通讲-第一章：起源</div></div></a></div><div><a href="/tangBlog/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（1）：快照和不可变对象模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-03</div><div class="title">Git通讲-第二章（1）：快照和不可变对象模型</div></div></a></div><div><a href="/tangBlog/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%882%EF%BC%89%EF%BC%9A%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Git通讲-第二章（2）：对象数据库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-03</div><div class="title">Git通讲-第二章（2）：对象数据库</div></div></a></div><div><a href="/tangBlog/2024/11/07/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%883%EF%BC%89%EF%BC%9A%E5%88%86%E6%94%AF%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（3）：分支模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-07</div><div class="title">Git通讲-第二章（3）：分支模型</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/tangBlog/img/avatar.png" onerror="this.onerror=null;this.src='/tangBlog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description">前行有光，是赶路人</div></div><div class="card-info-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">Git分布式版本控制的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%AC%E5%9C%B0%E5%AE%8C%E6%95%B4%E4%BB%93%E5%BA%93"><span class="toc-number">2.1.</span> <span class="toc-text">1. 本地完整仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E5%92%8C%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">2. 数据完整性和安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="toc-number">2.3.</span> <span class="toc-text">3. 分布式数据存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E7%9A%84%E5%8D%8F%E4%BD%9C%E6%96%B9%E5%BC%8F%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8F%E5%8D%8F%E4%BD%9C%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">4. 去中心化的协作方式（分布式协作）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%A6%BB%E7%BA%BF%E6%8F%90%E4%BA%A4%E5%92%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">2.5.</span> <span class="toc-text">5. 离线提交和版本管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%88%86%E6%94%AF%E6%A8%A1%E5%9E%8B%E6%94%AF%E6%8C%81%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91"><span class="toc-number">2.6.</span> <span class="toc-text">6. 分支模型支持并行开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="toc-number">2.7.</span> <span class="toc-text">7. 强大的同步机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%A1%A5%E4%B8%81%E5%88%86%E4%BA%AB%E4%B8%8E%E5%8F%98%E5%9F%BA%EF%BC%88Rebase%EF%BC%89"><span class="toc-number">2.8.</span> <span class="toc-text">8. 补丁分享与变基（Rebase）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%A4%9A%E6%96%B9%E5%8D%8F%E4%BD%9C%E4%B8%8E%E8%B4%A1%E7%8C%AE"><span class="toc-number">2.9.</span> <span class="toc-text">9. 多方协作与贡献</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.10.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%8D%8F%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">远程协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A3%B8%E4%BB%93%E5%BA%93%EF%BC%88Bare-Repository%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">1. 裸仓库（Bare Repository）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E8%BF%87SSH%E5%8D%8F%E8%AE%AE%E8%BF%9B%E8%A1%8C%E4%BB%93%E5%BA%93%E8%AE%BF%E9%97%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 通过SSH协议进行仓库访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%80%9A%E8%BF%87Email%E8%A1%A5%E4%B8%81%E4%BA%A4%E6%8D%A2%EF%BC%88Email-Patch-Exchange%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">3. 通过Email补丁交换（Email Patch Exchange）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8C%82%E8%BD%BD%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88NFS%E3%80%81SMB%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">4. 挂载网络文件系统（NFS、SMB）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%88%86%E5%B8%83%E5%BC%8F%E5%A4%9A%E4%BB%93%E5%BA%93%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.5.</span> <span class="toc-text">5. 分布式多仓库模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">3.6.</span> <span class="toc-text">6. 协作工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.7.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub%E7%AE%80%E5%8F%B2"><span class="toc-number">3.8.</span> <span class="toc-text">GitHub简史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2008-%E5%88%9B%E7%AB%8B"><span class="toc-number">3.9.</span> <span class="toc-text">1. 2008 - 创立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2009-%E5%BF%AB%E9%80%9F%E5%A2%9E%E9%95%BF%E4%B8%8E%E5%BC%80%E6%BA%90"><span class="toc-number">3.10.</span> <span class="toc-text">2. 2009 - 快速增长与开源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2011-%E6%88%90%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E9%A6%96%E9%80%89%E5%B9%B3%E5%8F%B0"><span class="toc-number">3.11.</span> <span class="toc-text">3. 2011 - 成为开发者首选平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2012-%E6%8E%A8%E5%87%BAGitHub-Enterprise"><span class="toc-number">3.12.</span> <span class="toc-text">4. 2012 - 推出GitHub Enterprise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2014-%E5%BC%80%E5%A7%8B%E5%85%A8%E7%90%83%E6%89%A9%E5%B1%95"><span class="toc-number">3.13.</span> <span class="toc-text">5. 2014 - 开始全球扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2015-2017-%E5%BC%80%E5%8F%91%E8%80%85%E5%8F%8B%E5%A5%BD%E5%8A%9F%E8%83%BD%E7%9A%84%E5%A2%9E%E5%A4%9A"><span class="toc-number">3.14.</span> <span class="toc-text">6. 2015 - 2017 - 开发者友好功能的增多</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2018-%E5%BE%AE%E8%BD%AF%E6%94%B6%E8%B4%AD"><span class="toc-number">3.15.</span> <span class="toc-text">7. 2018 - 微软收购</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2019-GitHub-Actions%E7%9A%84%E6%8E%A8%E5%87%BA"><span class="toc-number">3.16.</span> <span class="toc-text">8. 2019 - GitHub Actions的推出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2020-%E5%85%8D%E8%B4%B9%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E4%B8%8E%E6%96%B0%E5%8A%9F%E8%83%BD"><span class="toc-number">3.17.</span> <span class="toc-text">9. 2020 - 免费私有仓库与新功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2021-%E5%BC%80%E6%BA%90%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E6%96%B0%E6%96%B9%E5%90%91"><span class="toc-number">3.18.</span> <span class="toc-text">10. 2021 - 开源安全性的新方向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%9B%AE%E5%89%8D%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-number">3.19.</span> <span class="toc-text">11. 目前的发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">3.20.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">4.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/09/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" title="Git通讲-第二章（4）：分布式版本控制">Git通讲-第二章（4）：分布式版本控制</a><time datetime="2024-11-08T16:20:37.000Z" title="发表于 2024-11-09 00:20:37">2024-11-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/07/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%883%EF%BC%89%EF%BC%9A%E5%88%86%E6%94%AF%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（3）：分支模型">Git通讲-第二章（3）：分支模型</a><time datetime="2024-11-07T09:01:11.000Z" title="发表于 2024-11-07 17:01:11">2024-11-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%882%EF%BC%89%EF%BC%9A%E5%AF%B9%E8%B1%A1%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Git通讲-第二章（2）：对象数据库">Git通讲-第二章（2）：对象数据库</a><time datetime="2024-11-03T04:25:21.000Z" title="发表于 2024-11-03 12:25:21">2024-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/03/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E5%BF%AB%E7%85%A7%E5%92%8C%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" title="Git通讲-第二章（1）：快照和不可变对象模型">Git通讲-第二章（1）：快照和不可变对象模型</a><time datetime="2024-11-02T17:30:09.000Z" title="发表于 2024-11-03 01:30:09">2024-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/11/02/Git%E9%80%9A%E8%AE%B2-%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%B5%B7%E6%BA%90/" title="Git通讲-第一章：起源">Git通讲-第一章：起源</a><time datetime="2024-11-01T17:03:02.000Z" title="发表于 2024-11-02 01:03:02">2024-11-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By Drunksweet</div><div class="footer_custom_text">前行有光，是赶路人</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/tangBlog/js/utils.js?v=4.13.0"></script><script src="/tangBlog/js/main.js?v=4.13.0"></script><script src="/tangBlog/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/tangBlog/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
