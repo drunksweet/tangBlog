@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>认识Event Loop【1】 | 焦糖酒的妙妙屋</title><meta name="author" content="Drunksweet"><meta name="copyright" content="Drunksweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#6A5ACD"><meta name="description" content="前言这应该是一个系列文章，因为我觉得Event Loop（事件循环）是一件很抽象也很重要的一个机制。eventloop这个知识点处于非常杂糅的位置，和很多其他知识，如运行时、浏览器、渲染流程、数据结构、线程等等，也是正确理解JS异步编程的核心。所以很值得展开来娓娓道来。 ⚠️强烈建议学完JS异步语法知识后再来学习EventLoop。 JS是单线程的编程语言JS是单线程的编程语言，重要的事情说三遍，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识Event Loop【1】">
+<meta property="og:url" content="https://drunksweet.github.io/2025/03/09/%E8%AE%A4%E8%AF%86Event-Loop%E3%80%901%E3%80%91/index.html">
+<meta property="og:site_name" content="焦糖酒的妙妙屋">
+<meta property="og:description" content="前言这应该是一个系列文章，因为我觉得Event Loop（事件循环）是一件很抽象也很重要的一个机制。eventloop这个知识点处于非常杂糅的位置，和很多其他知识，如运行时、浏览器、渲染流程、数据结构、线程等等，也是正确理解JS异步编程的核心。所以很值得展开来娓娓道来。 ⚠️强烈建议学完JS异步语法知识后再来学习EventLoop。 JS是单线程的编程语言JS是单线程的编程语言，重要的事情说三遍，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://drunksweet.github.io/img/avatar.png">
+<meta property="article:published_time" content="2025-03-09T13:20:18.000Z">
+<meta property="article:modified_time" content="2025-03-09T14:25:59.289Z">
+<meta property="article:author" content="Drunksweet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://drunksweet.github.io/img/avatar.png"><link rel="shortcut icon" href="/tangBlog/img/icon.png"><link rel="canonical" href="https://drunksweet.github.io/2025/03/09/%E8%AE%A4%E8%AF%86Event-Loop%E3%80%901%E3%80%91/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/tangBlog/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/tangBlog/',
+  algolia: undefined,
+  localSearch: {"path":"/tangBlog/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Drunksweet","link":"链接: ","source":"来源: 焦糖酒的妙妙屋","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '认识Event Loop【1】',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-09 22:25:59'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#5846c7')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#6A5ACD')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/tangBlog/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><nav id="nav"><span id="blog-info"><a href="/tangBlog/" title="焦糖酒的妙妙屋"><img class="site-icon" src="/tangBlog/img/icon.png"/><span class="site-name">焦糖酒的妙妙屋</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/tangBlog/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gradution-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tangBlog/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tangBlog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/tangBlog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/tangBlog/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/tangBlog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">认识Event Loop【1】</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-09T13:20:18.000Z" title="发表于 2025-03-09 21:20:18">2025-03-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-09T14:25:59.289Z" title="更新于 2025-03-09 22:25:59">2025-03-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="认识Event Loop【1】"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这应该是一个系列文章，因为我觉得Event Loop（事件循环）是一件很抽象也很重要的一个机制。eventloop这个知识点处于非常杂糅的位置，和很多其他知识，如运行时、浏览器、渲染流程、数据结构、线程等等，也是正确理解JS异步编程的核心。所以很值得展开来娓娓道来。</p>
+<p>⚠️强烈建议学完JS异步语法知识后再来学习EventLoop。</p>
+<h2 id="JS是单线程的编程语言"><a href="#JS是单线程的编程语言" class="headerlink" title="JS是单线程的编程语言"></a>JS是单线程的编程语言</h2><p>JS是单线程的编程语言，重要的事情说三遍，<strong>单线程，单线程，单线程</strong>。接下来请读者思考一下，单线程是什么意思？<br>单线程意味着<strong>JavaScript在同一时刻只能执行一个任务或操作</strong>。也就是说，它一次只能处理一个事件或指令，<strong>不会同时处理多个任务</strong>。<br>那我就不禁要问，单线程如何实现异步编程，这不是开玩笑吗，how，轮询？回调？这不麻烦死了。能实现基本操作还好，但有稍微复杂点的该如何呢。举一个例子，<code>setTimeout</code>的时候为什么还可以执行其他代码，谁在那边倒数时间？执行其他任务和进行记时任务，这俩件事情是如何在所谓单线程的JS中同时执行的。蒙了吗，我就不禁要怀疑JS是不是单线程了。<br>直到我去了解了<strong>EventLoop</strong>，EventLoop就是在保证JS是单线程的特点的同时，让其拥有高效实现复杂异步的能力。<br>Eventloop避免了阻塞和性能瓶颈。如果没有事件循环，虽然理论上可以通过轮询、回调等方式实现异步编程，但这些方式都存在效率低、开发复杂度高等问题，且无法像事件循环那样高效地协调和管理多个异步操作。<br>简单介绍完了Event Loop的重要性，那么我们要开始正式认识它了。</p>
+<h2 id="Runtime运行时"><a href="#Runtime运行时" class="headerlink" title="Runtime运行时"></a>Runtime运行时</h2><p>我先说结论，<strong>JavaScript 本身是单线程的</strong>，但它的 <strong>运行环境（runtime）</strong>（如浏览器或 Node.js）提供了 <strong>事件循环（Event Loop）</strong>，并通过调用 <strong>底层的多线程 API</strong>（如浏览器的 Web APIs 或 Node.js 的 libuv 线程池）来实现异步操作。<br>那为什么浏览器能运行JS代码，就是因为浏览器内置了解析JS代码的工具，以Chromium浏览器内核为例，就是使用了大名鼎鼎的<strong>V8引擎</strong>。而eventloop实际上和runtime关系更密切的，本文就先以浏览器的Event Loop为中心，理解完浏览器后，下一章再介绍nodejs、deno、bun这些其他的“Runtime”</p>
+<h3 id="浏览器提供的runtime"><a href="#浏览器提供的runtime" class="headerlink" title="浏览器提供的runtime"></a>浏览器提供的runtime</h3><p>![Pasted Image 20250210160229_329](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> Image 20250210160229_329.png)<br>看这幅图，大概就明白JS引擎和运行时的关系了吧，它们之间是包含关系，而EventLoop并不是在JS引擎里实现的。<br>我们先不关注EventLoop的具体细节，乘胜追击简单了解一下浏览器的架构。</p>
+<h3 id="浏览器是多进程-多线程架构的"><a href="#浏览器是多进程-多线程架构的" class="headerlink" title="浏览器是多进程+多线程架构的"></a>浏览器是多进程+多线程架构的</h3><p>![Pasted Image 20250210163556_889](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> Image 20250210163556_889.png)<br>现代Chorme浏览器是多进程架构，一个页面就是一个进程，而一个进程可以有多个线程。通过多个线程协作来完成不同的任务，包括 JavaScript 执行、页面渲染、I&#x2F;O 操作等。通常，以下是常见的几个关键线程：</p>
+<ul>
+<li><p><strong>主线程</strong>：负责执行 JavaScript 代码、渲染页面、响应用户输入等。它与事件循环机制紧密配合。</p>
+</li>
+<li><p><strong>渲染线程（Rendering Thread）</strong>：专门负责页面渲染。它从 DOM 和 CSSOM 构建渲染树（Render Tree），然后进行页面布局、绘制和合成。渲染线程会独立于主线程运行，但也需要与主线程进行一定的交互（例如，当 DOM 更新时，渲染线程需要重新绘制）。</p>
+</li>
+<li><p><strong>网络线程（Network Thread）</strong>：负责处理网络请求，例如发起 HTTP 请求（如 <code>fetch</code> 或 <code>XMLHttpRequest</code>）以及接收服务器响应。它通常与主线程和渲染线程协作，但它运行在独立的线程中，不会阻塞 JavaScript 的执行。</p>
+</li>
+<li><p><strong>I&#x2F;O 线程（I&#x2F;O Thread）</strong>：处理与操作系统相关的 I&#x2F;O 操作（如文件操作、网络操作等）。它的作用是将 I&#x2F;O 操作的阻塞部分从主线程中分离出来，避免长时间的阻塞导致浏览器卡顿。</p>
+</li>
+<li><p><strong>Web Worker</strong>：Web Worker 是一个额外的线程，通常用于执行耗时的计算任务，以防止阻塞主线程。Web Worker 线程之间通过消息传递与主线程或其他 Worker 进行通信。</p>
+</li>
+</ul>
+<p>有了宏观的视角，读者应该能猜出来了吧，JS就是通过调用WebAPIs，将I&#x2F;O、Network、Render等极有可能消耗时间的任务甩锅给了浏览器的其他线程去执行，真坏啊，摸鱼技能+1。</p>
+<h2 id="理解为啥会堵塞"><a href="#理解为啥会堵塞" class="headerlink" title="理解为啥会堵塞"></a>理解为啥会堵塞</h2><p>![Pasted image 20250220231707](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> image 20250220231707.png)<br>咱们先理解单核CPU，单核CPU其实就类似于在一个在单一轨道上行驶的超跑，在闲置的时间（EventQueue和RenderTask没任务，这俩都是我自己乱取名的嗷)，就一直在黑色的轨道上一圈圈慢慢的跑。<br>当任务来了，需要CPU去进行处理的时候，这辆跑车就会进入蓝色或黄色轨道，去进行计算或读写操作。可能会对为什么CPU要去处理渲染任务有疑惑，这点和浏览器的渲染流程有关系，我直接简短告诉结论：<strong>渲染需要CPU先进行运算操作，后交由GPU去进行后续的处理，即需要二者配合，没有CPU的参与就会出现渲染堵塞的问题</strong>。<br>接下来我们在把注意力集中在<strong>EventQueue</strong>上，EventQueue，我自己这么叫它的，顾名思义，就是以类似于排队的感觉。各种事件和任务一个一个的进入队列中，然后等待CPU处理，处理完就滚蛋了，处理不完就会一直拖着CPU，不让它离开，像个事佬，其他任务处理不了，只能等着，这就是所谓的<strong>堵塞</strong>。</p>
+<h2 id="任务从哪来"><a href="#任务从哪来" class="headerlink" title="任务从哪来"></a>任务从哪来</h2><p>让我们一窥全貌，call me灵魂画师🫡👍<br>![Pasted image 20250220233807](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> image 20250220233807.png)<br>接下来的重点就是左上角的那部分<br>![Pasted image 20250220234005](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> image 20250220234005.png)</p>
+<h3 id="两种数据结构"><a href="#两种数据结构" class="headerlink" title="两种数据结构"></a>两种数据结构</h3><p>JS引擎维护一个CallStack回调栈，顾名思义，就一个栈结构，遵循先进后出（FILO）。而Runtime运行时维护一类TaskQueue，顾名思义，就是一个队列结构，遵循先进先出（FIFO）。<br><a target="_blank" rel="noopener" href="http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIGNvbnNvbGUubG9nKCJmdWNrIik7CiAgICBjb25zb2xlLmxvZygiZnVjayBwbHVzIik7CiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uIHRpbWVyKCkgewogICAgICAgIGNvbnNvbGUubG9nKCdZb3UgY2xpY2tlZCB0aGUgYnV0dG9uIScpOyAgICAKICAgIH0sIDIwMDApOwp9KTsKCmZ1bmN0aW9uIGxvb3Aobil7CiAgICBmb3IobGV0IGkgPSAwO2kgPCBuOyBpKyspewogICAgICAgIGNvbnNvbGUubG9nKCJIaSEiKTsKICAgIH0KfQoKY29uc29sZS5sb2coIkhpISIpOwoKbG9vcCgzKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gdGltZW91dCgpIHsKICAgIGNvbnNvbGUubG9nKCJDbGljayB0aGUgYnV0dG9uISIpOwp9LCA1MDAwKTsKCmxvb3AoNSk7Cgpjb25zb2xlLmxvZygiV2VsY29tZSB0byBsb3VwZS4iKTs=!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4=">动画模拟</a>感兴趣的可以看看这网站</p>
+<h4 id="CallStack"><a href="#CallStack" class="headerlink" title="CallStack"></a>CallStack</h4><p>先关注CallStack，又是顾名思义啊，为什么叫Call，其实就是执行回调函数（CallBack）。这点其实不是我们这片文章的重点，简单的讲一下，就是应该是所有编程语言吧，同步代码都是以回调栈这种形式去执行代码。<br>其实我感觉，可以比较粗暴的讲一切操作理解为“同步”，因为以回调栈的视角去看，无非是有任务来了就按照Stack的形式（FILO）去执行操作回调操作。</p>
+<h4 id="WebAPIs"><a href="#WebAPIs" class="headerlink" title="WebAPIs"></a>WebAPIs</h4><p>![Pasted Image 20250210163329_672](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/Pasted</a> Image 20250210163329_672.png)<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Introduction#what_can_apis_do">https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Introduction#what_can_apis_do</a><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API">https://developer.mozilla.org/zh-CN/docs/Web/API</a><br>WebAPIs有很多，感兴趣的可以自己去详细了解，我摘记了一段MDN的介绍</p>
+<blockquote>
+<p>客户端 JavaScript 中有很多可用的 API。它们本身并不属于 JavaScript 语言，却建立在核心 JavaScript 语言之上，为使用 JavaScript 代码提供额外的超强能力。它们通常分为两类：</p>
+<ul>
+<li><strong>浏览器 API</strong> 内置于 Web 浏览器中，能从浏览器和电脑周边环境中提取数据，并用来做有用的复杂的事情。例如，<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API">Web 音频 API</a> 为在浏览器中处理音频提供了 JavaScript 结构——获取音轨、改变音量、应用特效等。在后台，浏览器实际上使用了一些复杂的低级代码（如 C++ 或 Rust）来进行实际的音频处理。但同样，这种复杂性已被应用程序接口抽象化。</li>
+<li><strong>第三方 API</strong> 缺省情况下不会内置于浏览器中，通常必须在 Web 中的某个地方获取代码和信息。例如，<a target="_blank" rel="noopener" href="https://developers.google.cn/maps/documentation/javascript">Google Maps API</a> 使你能够执行诸如在网站上显示办公室的交互式地图之类的操作。它提供一系列特殊的结构，可以用来查询 Google 地图服务并返回特定信息。</li>
+</ul>
+</blockquote>
+<p>看看就好，这也提醒了我们，像是我们常用的DOM操作、fetch、setTimeout、setInterval都是通过WebAPIs来实现的，也就是说这些功能在其他Runtime中就不一定有，比如在NodeJS中就没有DOM操作。</p>
+<h2 id="TaskQueue"><a href="#TaskQueue" class="headerlink" title="TaskQueue"></a>TaskQueue</h2><p>接下来就到了任务队列了<br>![截屏2025-02-22 13.34.04](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/%E6%88%AA%E5%B1%8F2025-02-22">https://cdn.jsdelivr.net/gh/drunksweet/tangBlogPic/截屏2025-02-22</a> 13.34.04.png)<br>任务队列在浏览器环境中又区分微任务队列和宏任务队列，之所以区分，我猜测是为了对事件有更加精细的操作，就如NodeJS则甚至会有6个不同的阶段，当然NodeJS还不是本文的重点。</p>
+<h3 id="宏任务（Macro-task）"><a href="#宏任务（Macro-task）" class="headerlink" title="宏任务（Macro-task）"></a>宏任务（Macro-task）</h3><p>宏任务指的是宿主环境（如浏览器或 Node.js）提供的任务，通常与用户交互、I&#x2F;O、定时器等相关。<br>通常是一些消耗时间比较多，计算量比较大的任务。</p>
+<h4 id="常见的宏任务"><a href="#常见的宏任务" class="headerlink" title="常见的宏任务"></a><strong>常见的宏任务</strong></h4><ul>
+<li><code>setTimeout</code></li>
+<li><code>setInterval</code></li>
+<li><code>setImmediate</code>（Node.js 专有）</li>
+<li>I&#x2F;O 操作（如文件读取、数据库查询）</li>
+</ul>
+<h4 id="比较特殊的宏任务"><a href="#比较特殊的宏任务" class="headerlink" title="比较特殊的宏任务"></a>比较特殊的宏任务</h4><ul>
+<li><code>requestAnimationFrame</code>（浏览器专有）</li>
+<li>UI 渲染任务（浏览器）<br>之所以说特殊，因为UI渲染的频率是和屏幕的刷新频率有直接关系的，也就是说屏幕如果说60hz的，在主线程不堵塞的情况下，就会每1&#x2F;60秒去执行一次渲染任务，而如果个任务堵塞时间过长，就会将渲染任务延迟，甚至直接丢失（也就是会发生所谓的掉帧、丢帧）</li>
+</ul>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>每次事件循环（Event Loop）都会从任务队列（Task Queue）中取出一个宏任务执行。</p>
+<h3 id="微任务（Micro-task）"><a href="#微任务（Micro-task）" class="headerlink" title="微任务（Micro-task）"></a>微任务（Micro-task）</h3><h4 id="常见的微任务"><a href="#常见的微任务" class="headerlink" title="常见的微任务"></a><strong>常见的微任务</strong></h4><ul>
+<li><code>Promise.then()</code>、<code>catch()</code>、<code>finally()</code></li>
+<li><code>MutationObserver</code>（浏览器专有）</li>
+<li><code>queueMicrotask()</code>（现代浏览器和 Node.js）</li>
+</ul>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><p>微任务的优先级高于宏任务，JS 引擎会立即清空所有的微任务队列（Micro-task Queue）中的任务。</p>
+<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a><strong>执行顺序</strong></h2><p>已经了解了CallStack 和 TaskQueue，那么了解EventLoop就是易如反掌，接下来死记硬背一下规则就行了，没有为什么，就是一个人为规定的固定顺序</p>
+<ol>
+<li><strong>执行同步代码（包括变量声明、函数调用等）</strong></li>
+<li><strong>执行所有微任务</strong></li>
+<li><strong>取出并执行一个宏任务</strong></li>
+<li><strong>重复步骤 2 和 3</strong><br>这就是浏览器里的EventLoop</li>
+</ol>
+<h2 id="重新理解堵塞"><a href="#重新理解堵塞" class="headerlink" title="重新理解堵塞"></a>重新理解堵塞</h2><p>微微的callback一下，从执行循序可以知道，<br>1.如果同步代码中执行的任务计算量太大，就会难以清空CallStack，堵塞TaskQueue里异步任务的执行。<br>2.如果微任务过多，就会堵塞宏任务的执行<br>3.如果单个任务执行时间超过<code>两倍屏幕刷新率</code>就会出现丢帧</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>下次分享我应该会分享一下NodeJS的EventLoop，如果我时间的话，会顺手讲解一下Deno和Bun的EventLoop，当然这俩个目前没啥必要学，只是为了加深一下读者们“<strong>EventLoop由Runtime构建的而不是JS引擎</strong>”的这个重要观点。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io">Drunksweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://drunksweet.github.io/2025/03/09/%E8%AE%A4%E8%AF%86Event-Loop%E3%80%901%E3%80%91/">https://drunksweet.github.io/2025/03/09/%E8%AE%A4%E8%AF%86Event-Loop%E3%80%901%E3%80%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://drunksweet.github.io" target="_blank">焦糖酒的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/tangBlog/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/tangBlog/2025/02/12/%E5%8A%A8%E6%95%88%E6%8A%80%E6%9C%AF%E8%B0%83%E6%9F%A5%E6%8A%A5%E5%91%8A%EF%BC%88PAG%E3%80%81Lottie%EF%BC%89/" title="动效技术调查报告（PAG、Lottie）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">动效技术调查报告（PAG、Lottie）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/tangBlog/img/avatar.png" onerror="this.onerror=null;this.src='/tangBlog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Drunksweet</div><div class="author-info__description">前行有光，是赶路人</div></div><div class="card-info-data site-data is-center"><a href="/tangBlog/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tangBlog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/tangBlog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/drunksweet"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/drunksweet" target="_blank" title="Github"><i class="fab fa-github" style="color: #ffffff;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E6%98%AF%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">JS是单线程的编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Runtime%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="toc-number">3.</span> <span class="toc-text">Runtime运行时</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%90%E4%BE%9B%E7%9A%84runtime"><span class="toc-number">3.1.</span> <span class="toc-text">浏览器提供的runtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%98%AF%E5%A4%9A%E8%BF%9B%E7%A8%8B-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9E%B6%E6%9E%84%E7%9A%84"><span class="toc-number">3.2.</span> <span class="toc-text">浏览器是多进程+多线程架构的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3%E4%B8%BA%E5%95%A5%E4%BC%9A%E5%A0%B5%E5%A1%9E"><span class="toc-number">4.</span> <span class="toc-text">理解为啥会堵塞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E4%BB%8E%E5%93%AA%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">任务从哪来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">两种数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CallStack"><span class="toc-number">5.1.1.</span> <span class="toc-text">CallStack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WebAPIs"><span class="toc-number">5.1.2.</span> <span class="toc-text">WebAPIs</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TaskQueue"><span class="toc-number">6.</span> <span class="toc-text">TaskQueue</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%88Macro-task%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">宏任务（Macro-task）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="toc-number">6.1.1.</span> <span class="toc-text">常见的宏任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E7%89%B9%E6%AE%8A%E7%9A%84%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="toc-number">6.1.2.</span> <span class="toc-text">比较特殊的宏任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">6.1.3.</span> <span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88Micro-task%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">微任务（Micro-task）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-number">6.2.1.</span> <span class="toc-text">常见的微任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-number">6.2.2.</span> <span class="toc-text">特点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">7.</span> <span class="toc-text">执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E7%90%86%E8%A7%A3%E5%A0%B5%E5%A1%9E"><span class="toc-number">8.</span> <span class="toc-text">重新理解堵塞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">9.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2025/03/09/%E8%AE%A4%E8%AF%86Event-Loop%E3%80%901%E3%80%91/" title="认识Event Loop【1】">认识Event Loop【1】</a><time datetime="2025-03-09T13:20:18.000Z" title="发表于 2025-03-09 21:20:18">2025-03-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2025/02/12/%E5%8A%A8%E6%95%88%E6%8A%80%E6%9C%AF%E8%B0%83%E6%9F%A5%E6%8A%A5%E5%91%8A%EF%BC%88PAG%E3%80%81Lottie%EF%BC%89/" title="动效技术调查报告（PAG、Lottie）">动效技术调查报告（PAG、Lottie）</a><time datetime="2025-02-12T15:45:35.000Z" title="发表于 2025-02-12 23:45:35">2025-02-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2025/02/06/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E5%B9%B2%E4%BB%80%E4%B9%88%E3%80%902%E3%80%91/" title="我最近在干什么【2】">我最近在干什么【2】</a><time datetime="2025-02-06T12:01:57.000Z" title="发表于 2025-02-06 20:01:57">2025-02-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2025/01/01/2024%E5%B9%B4%E6%9C%AB%E6%80%BB%E7%BB%93/" title="2024年末总结">2024年末总结</a><time datetime="2024-12-31T17:20:00.000Z" title="发表于 2025-01-01 01:20:00">2025-01-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/tangBlog/2024/12/16/Radmin-LAN%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90%E2%80%94%E2%80%94NAT%E7%A9%BF%E9%80%8F/" title="Radmin LAN技术分析——NAT穿透">Radmin LAN技术分析——NAT穿透</a><time datetime="2024-12-16T09:21:44.000Z" title="发表于 2024-12-16 17:21:44">2024-12-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/tangBlog/img/topBkgOne.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Drunksweet</div><div class="footer_custom_text">前行有光，是赶路人</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/tangBlog/js/utils.js?v=4.13.0"></script><script src="/tangBlog/js/main.js?v=4.13.0"></script><script src="/tangBlog/js/tw_cn.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/tangBlog/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
